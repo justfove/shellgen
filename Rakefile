@@ -1,4 +1,5 @@
 require 'tmpdir'
 
 def step(description)
-  descript
+  description = "-- #{description} "
+  description 
