@@ -7,4 +7,6 @@ def step(description)
   puts "\e[32m#{description}\e[0m"
 end
 
-def app_path
+def app_path(name)
+  path = "/Applications/#{name}.app"
+  ["
