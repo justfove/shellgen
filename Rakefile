@@ -10,4 +10,7 @@ end
 def app_path(name)
   path = "/Applications/#{name}.app"
   ["~#{path}", path].each do |full_path|
-    return full_p
+    return full_path if File.directory?(full_path)
+  end
+
+  return
