@@ -13,4 +13,8 @@ def app_path(name)
     return full_path if File.directory?(full_path)
   end
 
-  return
+  return nil
+end
+
+def app?(name)
+  return !app_path(name).
