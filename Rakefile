@@ -17,4 +17,7 @@ def app_path(name)
 end
 
 def app?(name)
-  return !app_path(name).
+  return !app_path(name).nil?
+end
+
+def link_file(original_filename, symlink_filen
