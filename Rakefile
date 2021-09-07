@@ -20,4 +20,5 @@ def app?(name)
   return !app_path(name).nil?
 end
 
-def link_file(original_filename, symlink_filen
+def link_file(original_filename, symlink_filename)
+  original_path = File.expand_path(origi
