@@ -21,4 +21,5 @@ def app?(name)
 end
 
 def link_file(original_filename, symlink_filename)
-  original_path = File.expand_path(origi
+  original_path = File.expand_path(original_filename)
+  symlink_path = File.expand_path(
