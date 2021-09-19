@@ -23,4 +23,5 @@ end
 def link_file(original_filename, symlink_filename)
   original_path = File.expand_path(original_filename)
   symlink_path = File.expand_path(symlink_filename)
-  if File.exists?(symlink_
+  if File.exists?(symlink_path)
+    # Symlink already configured properl
