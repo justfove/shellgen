@@ -25,4 +25,4 @@ def link_file(original_filename, symlink_filename)
   symlink_path = File.expand_path(symlink_filename)
   if File.exists?(symlink_path)
     # Symlink already configured properly. Leave it alone.
-    return if File.symlink
+    return if File.symlink?(symlink_path) and File.readlink(symlink_path)
