@@ -31,4 +31,6 @@ def link_file(original_filename, symlink_filename)
     loop do
       backup_path = "#{symlink_path}.bak"
       if number > 1
-        backup_path = "#
+        backup_path = "#{backup_path}#{number}"
+      end
+      if
