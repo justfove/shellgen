@@ -28,4 +28,6 @@ def link_file(original_filename, symlink_filename)
     return if File.symlink?(symlink_path) and File.readlink(symlink_path) == original_path
     # Never move user's files without creating backups first
     number = 1
-    loop
+    loop do
+      backup_path = "#{symlink_path}.bak"
+  
