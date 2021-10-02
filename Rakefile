@@ -33,4 +33,7 @@ def link_file(original_filename, symlink_filename)
       if number > 1
         backup_path = "#{backup_path}#{number}"
       end
-      if
+      if File.exists?(backup_path)
+        number += 1
+        next
+  
