@@ -36,4 +36,5 @@ def link_file(original_filename, symlink_filename)
       if File.exists?(backup_path)
         number += 1
         next
-  
+      end
+      mv symlink_path, backup
