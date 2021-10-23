@@ -41,4 +41,4 @@ def link_file(original_filename, symlink_filename)
       break
     end
   end
-  ln
+  ln_s original_path, symlink_path, :verbose => t
