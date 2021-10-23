@@ -41,4 +41,9 @@ def link_file(original_filename, symlink_filename)
       break
     end
   end
-  ln_s original_path, symlink_path, :verbose => t
+  ln_s original_path, symlink_path, :verbose => true
+end
+
+namespace :install do
+
+  desc 'Apt-ge
