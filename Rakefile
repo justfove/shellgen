@@ -46,4 +46,6 @@ end
 
 namespace :install do
 
-  desc 'Apt-ge
+  desc 'Apt-get Update'
+  task :update do
+    step 'apt-get 
