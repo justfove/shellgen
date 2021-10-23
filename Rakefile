@@ -37,4 +37,8 @@ def link_file(original_filename, symlink_filename)
         number += 1
         next
       end
-      mv symlink_path, backup
+      mv symlink_path, backup_path, :verbose => true
+      break
+    end
+  end
+  ln
