@@ -48,4 +48,8 @@ namespace :install do
 
   desc 'Apt-get Update'
   task :update do
-    step 'apt-get 
+    step 'apt-get update'
+    sh 'sudo apt-get update'
+  end
+
+  d
