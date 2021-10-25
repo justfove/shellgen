@@ -52,4 +52,6 @@ namespace :install do
     sh 'sudo apt-get update'
   end
 
-  d
+  desc 'Install Vim'
+  task :vim do
+    step 
