@@ -54,4 +54,5 @@ namespace :install do
 
   desc 'Install Vim'
   task :vim do
-    step 
+    step 'vim'
+    sh 'sudo apt-get install vi
