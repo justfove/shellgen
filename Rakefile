@@ -65,4 +65,6 @@ namespace :install do
   end
 
   desc 'Install ctags'
-  task
+  task :ctags do
+    step 'ctags'
+    sh 'sudo apt-get insta
