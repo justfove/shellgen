@@ -55,4 +55,8 @@ namespace :install do
   desc 'Install Vim'
   task :vim do
     step 'vim'
-    sh 'sudo apt-get install vi
+    sh 'sudo apt-get install vim'
+  end
+
+  desc 'Install tmux'
+  task :tmux
