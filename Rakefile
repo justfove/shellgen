@@ -61,4 +61,8 @@ namespace :install do
   desc 'Install tmux'
   task :tmux do
     step 'tmux'
-    sh 'sudo apt-get in
+    sh 'sudo apt-get install tmux'
+  end
+
+  desc 'Install ctags'
+  task
