@@ -59,4 +59,6 @@ namespace :install do
   end
 
   desc 'Install tmux'
-  task :tmux
+  task :tmux do
+    step 'tmux'
+    sh 'sudo apt-get in
