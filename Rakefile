@@ -71,4 +71,5 @@ namespace :install do
   end
 
   # https://github.com/ggreer/the_silver_searcher
-  desc 'Install The Silve
+  desc 'Install The Silver Searcher'
+  task :the_silver_searcher do
