@@ -67,4 +67,7 @@ namespace :install do
   desc 'Install ctags'
   task :ctags do
     step 'ctags'
-    sh 'sudo apt-get insta
+    sh 'sudo apt-get install ctags'
+  end
+
+  # https://github.com/
