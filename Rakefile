@@ -70,4 +70,5 @@ namespace :install do
     sh 'sudo apt-get install ctags'
   end
 
-  # https://github.com/
+  # https://github.com/ggreer/the_silver_searcher
+  desc 'Install The Silve
