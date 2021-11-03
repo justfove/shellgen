@@ -73,3 +73,5 @@ namespace :install do
   # https://github.com/ggreer/the_silver_searcher
   desc 'Install The Silver Searcher'
   task :the_silver_searcher do
+    step 'the_silver_searcher'
+    sh 'sudo apt-get ins
