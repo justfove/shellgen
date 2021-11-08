@@ -76,4 +76,6 @@ namespace :install do
     step 'the_silver_searcher'
     sh 'sudo apt-get install build-essential automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev'
     sh 'git clone https://github.com/ggreer/the_silver_searcher.git'
-    Dir.chdir 'the_silver_s
+    Dir.chdir 'the_silver_searcher' do
+      sh './build.sh'
+ 
