@@ -74,4 +74,4 @@ namespace :install do
   desc 'Install The Silver Searcher'
   task :the_silver_searcher do
     step 'the_silver_searcher'
-    sh 'sudo apt-get ins
+    sh 'sudo apt-get install build-essential automake pkg-config l
