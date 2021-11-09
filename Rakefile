@@ -78,4 +78,8 @@ namespace :install do
     sh 'git clone https://github.com/ggreer/the_silver_searcher.git'
     Dir.chdir 'the_silver_searcher' do
       sh './build.sh'
- 
+      sh 'sudo make install'
+    end
+  end
+
+  
