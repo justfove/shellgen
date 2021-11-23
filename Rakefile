@@ -82,4 +82,4 @@ namespace :install do
     end
   end
 
-  # instructions from http://www.webupd8.org/2011/04/
+  # instructions from http://www.webupd8.org/2011/04/solarized-must-have-color-paletter-for.ht
