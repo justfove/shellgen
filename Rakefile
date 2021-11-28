@@ -82,4 +82,6 @@ namespace :install do
     end
   end
 
-  # instructions from http://www.webupd8.org/2011/04/solarized-must-have-color-paletter-for.ht
+  # instructions from http://www.webupd8.org/2011/04/solarized-must-have-color-paletter-for.html
+  desc 'Install Solarized and fix ls'
+  task :solari
