@@ -84,4 +84,5 @@ namespace :install do
 
   # instructions from http://www.webupd8.org/2011/04/solarized-must-have-color-paletter-for.html
   desc 'Install Solarized and fix ls'
-  task :solari
+  task :solarized, :arg1 do |t, args|
+    args[:arg1] = "dark" unless 
