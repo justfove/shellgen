@@ -86,4 +86,6 @@ namespace :install do
   desc 'Install Solarized and fix ls'
   task :solarized, :arg1 do |t, args|
     args[:arg1] = "dark" unless ["dark", "light"].include? args[:arg1]
-    color = ["dark", "light"].include?(args[:
+    color = ["dark", "light"].include?(args[:arg1]) ? args[:arg1] : "dark"
+
+    ste
