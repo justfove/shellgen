@@ -88,4 +88,5 @@ namespace :install do
     args[:arg1] = "dark" unless ["dark", "light"].include? args[:arg1]
     color = ["dark", "light"].include?(args[:arg1]) ? args[:arg1] : "dark"
 
-    ste
+    step 'solarized'
+    sh 'git clone https://github.com/s
