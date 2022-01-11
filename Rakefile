@@ -89,4 +89,5 @@ namespace :install do
     color = ["dark", "light"].include?(args[:arg1]) ? args[:arg1] : "dark"
 
     step 'solarized'
-    sh 'git clone https://github.com/sigurdga/gnome-terminal-colors-solarized.gi
+    sh 'git clone https://github.com/sigurdga/gnome-terminal-colors-solarized.git' unless File.exist? 'gnome-terminal-colors-solarized'
+ 
