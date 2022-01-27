@@ -94,4 +94,6 @@ namespace :install do
       sh "./solarize #{color}"
     end
 
-    step 'fi
+    step 'fix ls-colors'
+    Dir.chdir do
+      sh "wget -
