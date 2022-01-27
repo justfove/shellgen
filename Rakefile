@@ -91,4 +91,7 @@ namespace :install do
     step 'solarized'
     sh 'git clone https://github.com/sigurdga/gnome-terminal-colors-solarized.git' unless File.exist? 'gnome-terminal-colors-solarized'
     Dir.chdir 'gnome-terminal-colors-solarized' do
-   
+      sh "./solarize #{color}"
+    end
+
+    step 'fi
