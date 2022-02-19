@@ -96,4 +96,4 @@ namespace :install do
 
     step 'fix ls-colors'
     Dir.chdir do
-      sh "wget --no-check-certificate https://raw.github.co
+      sh "wget --no-check-certificate https://raw.github.com/seebi/dircolors-solarized/master/dircolor
