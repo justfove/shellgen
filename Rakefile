@@ -97,4 +97,5 @@ namespace :install do
     step 'fix ls-colors'
     Dir.chdir do
       sh "wget --no-check-certificate https://raw.github.com/seebi/dircolors-solarized/master/dircolors.ansi-#{color}"
-      sh "mv dircolors.ansi-
+      sh "mv dircolors.ansi-#{color} .dircolors"
+      sh 'eval `dircol
