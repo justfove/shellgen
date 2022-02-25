@@ -98,4 +98,9 @@ namespace :install do
     Dir.chdir do
       sh "wget --no-check-certificate https://raw.github.com/seebi/dircolors-solarized/master/dircolors.ansi-#{color}"
       sh "mv dircolors.ansi-#{color} .dircolors"
-      sh 'eval `dircol
+      sh 'eval `dircolors .dircolors`'
+    end
+  end
+end
+
+desc 'Insta
