@@ -104,4 +104,5 @@ namespace :install do
 end
 
 desc 'Install these config files.'
-task :defa
+task :default do
+  Rake::Task['install:update'].invoke
