@@ -103,4 +103,5 @@ namespace :install do
   end
 end
 
-desc 'Insta
+desc 'Install these config files.'
+task :defa
