@@ -106,3 +106,5 @@ end
 desc 'Install these config files.'
 task :default do
   Rake::Task['install:update'].invoke
+  Rake::Task['install:vim'].invoke
+  Rake::T
