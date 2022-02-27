@@ -108,4 +108,5 @@ task :default do
   Rake::Task['install:update'].invoke
   Rake::Task['install:vim'].invoke
   Rake::Task['install:tmux'].invoke
-  Rake::Task['
+  Rake::Task['install:ctags'].invoke
+  Rake::Task['instal
