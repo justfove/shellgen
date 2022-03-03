@@ -111,4 +111,5 @@ task :default do
   Rake::Task['install:ctags'].invoke
   Rake::Task['install:the_silver_searcher'].invoke
 
-  step 'g
+  step 'git submodules'
+  sh 'git submodule update
