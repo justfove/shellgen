@@ -109,4 +109,6 @@ task :default do
   Rake::Task['install:vim'].invoke
   Rake::Task['install:tmux'].invoke
   Rake::Task['install:ctags'].invoke
-  Rake::Task['instal
+  Rake::Task['install:the_silver_searcher'].invoke
+
+  step 'g
