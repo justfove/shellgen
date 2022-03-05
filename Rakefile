@@ -115,4 +115,7 @@ task :default do
   sh 'git submodule update --init'
 
   # TODO install gem ctags?
-  # 
+  # TODO run gem ctags?
+
+  step 'symlink'
+  link_fil
