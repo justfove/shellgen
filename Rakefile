@@ -118,4 +118,5 @@ task :default do
   # TODO run gem ctags?
 
   step 'symlink'
-  link_fil
+  link_file 'vim'       , '~/.vim'
+  link_file 'tmux.conf'
