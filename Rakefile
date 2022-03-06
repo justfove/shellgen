@@ -120,4 +120,5 @@ task :default do
   step 'symlink'
   link_file 'vim'       , '~/.vim'
   link_file 'tmux.conf' , '~/.tmux.conf'
-  link_file 'vimrc'     , '~/
+  link_file 'vimrc'     , '~/.vimrc'
+  unless File.exist?(File.expand_path('~/.vi
