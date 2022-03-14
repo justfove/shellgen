@@ -125,4 +125,6 @@ task :default do
     cp File.expand_path('vimrc.local'), File.expand_path('~/.vimrc.local'), :verbose => true
   end
 
-  step 'solarized dark or
+  step 'solarized dark or light'
+  puts
+  puts " You're almost done! Ins
