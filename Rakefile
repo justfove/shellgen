@@ -122,4 +122,7 @@ task :default do
   link_file 'tmux.conf' , '~/.tmux.conf'
   link_file 'vimrc'     , '~/.vimrc'
   unless File.exist?(File.expand_path('~/.vimrc.local'))
-    cp File.expand_path('vimrc.local'), File.expand_path('~/.vimrc.local'), :verbos
+    cp File.expand_path('vimrc.local'), File.expand_path('~/.vimrc.local'), :verbose => true
+  end
+
+  step 'solarized dark or
