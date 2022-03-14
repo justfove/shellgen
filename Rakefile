@@ -127,4 +127,4 @@ task :default do
 
   step 'solarized dark or light'
   puts
-  puts " You're almost done! Ins
+  puts " You're almost done! Inside of the maximum-awesome-linux direc
