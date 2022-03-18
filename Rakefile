@@ -128,4 +128,5 @@ task :default do
   step 'solarized dark or light'
   puts
   puts " You're almost done! Inside of the maximum-awesome-linux directory, do: "
-  puts "   rake install:solarized['da
+  puts "   rake install:solarized['dark'] "
+  puts "     or                
