@@ -129,4 +129,5 @@ task :default do
   puts
   puts " You're almost done! Inside of the maximum-awesome-linux directory, do: "
   puts "   rake install:solarized['dark'] "
-  puts "     or                
+  puts "     or                           "
+  puts "   rake install:solarized['ligh
