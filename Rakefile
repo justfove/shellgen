@@ -132,4 +132,4 @@ task :default do
   puts "     or                           "
   puts "   rake install:solarized['light']"
 
-  puts " You may need to close your
+  puts " You may need to close your terminal and re-open it for it to take effec
