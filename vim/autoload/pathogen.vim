@@ -197,3 +197,38 @@ endfunction " }}}1
 
 function! s:Findcomplete(A,L,P) " {{{1
   let sep = pathogen#separator()
+  let cheats = {
+        \'a': 'autoload',
+        \'d': 'doc',
+        \'f': 'ftplugin',
+        \'i': 'indent',
+        \'p': 'plugin',
+        \'s': 'syntax'}
+  if a:A =~# '^\w[\\/]' && has_key(cheats,a:A[0])
+    let request = cheats[a:A[0]].a:A[1:-1]
+  else
+    let request = a:A
+  endif
+  let pattern = substitute(request,'\'.sep,'*'.sep,'g').'*'
+  let found = {}
+  for path in pathogen#split(&runtimepath)
+    let matches = split(glob(path.sep.pattern),"\n")
+    call map(matches,'isdirectory(v:val) ? v:val.sep : v:val')
+    call map(matches,'v:val[strlen(path)+1:-1]')
+    for match in matches
+      let found[match] = 1
+    endfor
+  endfor
+  return sort(keys(found))
+endfunction " }}}1
+
+command! -bar -bang -count=1 -nargs=1 -complete=customlist,s:Findcomplete Ve       :execute s:find(<count>,'edit<bang>',<q-args>,0)
+command! -bar -bang -count=1 -nargs=1 -complete=customlist,s:Findcomplete Vedit    :execute s:find(<count>,'edit<bang>',<q-args>,0)
+command! -bar -bang -count=1 -nargs=1 -complete=customlist,s:Findcomplete Vopen    :execute s:find(<count>,'edit<bang>',<q-args>,1)
+command! -bar -bang -count=1 -nargs=1 -complete=customlist,s:Findcomplete Vsplit   :execute s:find(<count>,'split',<q-args>,<bang>1)
+command! -bar -bang -count=1 -nargs=1 -complete=customlist,s:Findcomplete Vvsplit  :execute s:find(<count>,'vsplit',<q-args>,<bang>1)
+command! -bar -bang -count=1 -nargs=1 -complete=customlist,s:Findcomplete Vtabedit :execute s:find(<count>,'tabedit',<q-args>,<bang>1)
+command! -bar -bang -count=1 -nargs=1 -complete=customlist,s:Findcomplete Vpedit   :execute s:find(<count>,'pedit',<q-args>,<bang>1)
+command! -bar -bang -count=1 -nargs=1 -complete=customlist,s:Findcomplete Vread    :execute s:find(<count>,'read',<q-args>,<bang>1)
+
+" vim:set ft=vim ts=8 sw=2 sts=2:
