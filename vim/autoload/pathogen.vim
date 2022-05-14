@@ -69,3 +69,48 @@ endfunction " }}}1
 function! pathogen#legacyjoin(...) abort " {{{1
   return call('pathogen#join',[1] + a:000)
 endfunction " }}}1
+
+" Remove duplicates from a list.
+function! pathogen#uniq(list) abort " {{{1
+  let i = 0
+  let seen = {}
+  while i < len(a:list)
+    if (a:list[i] ==# '' && exists('empty')) || has_key(seen,a:list[i])
+      call remove(a:list,i)
+    elseif a:list[i] ==# ''
+      let i += 1
+      let empty = 1
+    else
+      let seen[a:list[i]] = 1
+      let i += 1
+    endif
+  endwhile
+  return a:list
+endfunction " }}}1
+
+" \ on Windows unless shellslash is set, / everywhere else.
+function! pathogen#separator() abort " {{{1
+  return !exists("+shellslash") || &shellslash ? '/' : '\'
+endfunction " }}}1
+
+" Convenience wrapper around glob() which returns a list.
+function! pathogen#glob(pattern) abort " {{{1
+  let files = split(glob(a:pattern),"\n")
+  return map(files,'substitute(v:val,"[".pathogen#separator()."/]$","","")')
+endfunction "}}}1
+
+" Like pathogen#glob(), only limit the results to directories.
+function! pathogen#glob_directories(pattern) abort " {{{1
+  return filter(pathogen#glob(a:pattern),'isdirectory(v:val)')
+endfunction "}}}1
+
+" Turn filetype detection off and back on again if it was already enabled.
+function! pathogen#cycle_filetype() " {{{1
+  if exists('g:did_load_filetypes')
+    filetype off
+    filetype on
+  endif
+endfunction " }}}1
+
+" Checks if a bundle is 'disabled'. A bundle is considered 'disabled' if
+" its 'basename()' is included in g:pathogen_disabled[]' or ends in a tilde.
