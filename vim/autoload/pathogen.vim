@@ -114,3 +114,51 @@ endfunction " }}}1
 
 " Checks if a bundle is 'disabled'. A bundle is considered 'disabled' if
 " its 'basename()' is included in g:pathogen_disabled[]' or ends in a tilde.
+function! pathogen#is_disabled(path) " {{{1
+  if a:path =~# '\~$'
+    return 1
+  elseif !exists("g:pathogen_disabled")
+    return 0
+  endif
+  let sep = pathogen#separator()
+  return index(g:pathogen_disabled, strpart(a:path, strridx(a:path, sep)+1)) != -1
+endfunction "}}}1
+
+" Prepend all subdirectories of path to the rtp, and append all 'after'
+" directories in those subdirectories.
+function! pathogen#runtime_prepend_subdirectories(path) " {{{1
+  let sep    = pathogen#separator()
+  let before = filter(pathogen#glob_directories(a:path.sep."*"), '!pathogen#is_disabled(v:val)')
+  let after  = filter(pathogen#glob_directories(a:path.sep."*".sep."after"), '!pathogen#is_disabled(v:val[0:-7])')
+  let rtp = pathogen#split(&rtp)
+  let path = expand(a:path)
+  call filter(rtp,'v:val[0:strlen(path)-1] !=# path')
+  let &rtp = pathogen#join(pathogen#uniq(before + rtp + after))
+  return &rtp
+endfunction " }}}1
+
+" For each directory in rtp, check for a subdirectory named dir.  If it
+" exists, add all subdirectories of that subdirectory to the rtp, immediately
+" after the original directory.  If no argument is given, 'bundle' is used.
+" Repeated calls with the same arguments are ignored.
+function! pathogen#runtime_append_all_bundles(...) " {{{1
+  let sep = pathogen#separator()
+  let name = a:0 ? a:1 : 'bundle'
+  if "\n".s:done_bundles =~# "\\M\n".name."\n"
+    return ""
+  endif
+  let s:done_bundles .= name . "\n"
+  let list = []
+  for dir in pathogen#split(&rtp)
+    if dir =~# '\<after$'
+      let list +=  filter(pathogen#glob_directories(substitute(dir,'after$',name,'').sep.'*[^~]'.sep.'after'), '!pathogen#is_disabled(v:val[0:-7])') + [dir]
+    else
+      let list +=  [dir] + filter(pathogen#glob_directories(dir.sep.name.sep.'*[^~]'), '!pathogen#is_disabled(v:val)')
+    endif
+  endfor
+  let &rtp = pathogen#join(pathogen#uniq(list))
+  return 1
+endfunction
+
+let s:done_bundles = ''
+" }}}1
