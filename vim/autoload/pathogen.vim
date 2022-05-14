@@ -162,3 +162,38 @@ endfunction
 
 let s:done_bundles = ''
 " }}}1
+
+" Invoke :helptags on all non-$VIM doc directories in runtimepath.
+function! pathogen#helptags() " {{{1
+  let sep = pathogen#separator()
+  for dir in pathogen#split(&rtp)
+    if (dir.sep)[0 : strlen($VIMRUNTIME)] !=# $VIMRUNTIME.sep && filewritable(dir.sep.'doc') == 2 && !empty(glob(dir.sep.'doc'.sep.'*')) && (!filereadable(dir.sep.'doc'.sep.'tags') || filewritable(dir.sep.'doc'.sep.'tags'))
+      helptags `=dir.'/doc'`
+    endif
+  endfor
+endfunction " }}}1
+
+command! -bar Helptags :call pathogen#helptags()
+
+" Like findfile(), but hardcoded to use the runtimepath.
+function! pathogen#runtime_findfile(file,count) "{{{1
+  let rtp = pathogen#join(1,pathogen#split(&rtp))
+  return fnamemodify(findfile(a:file,rtp,a:count),':p')
+endfunction " }}}1
+
+function! s:find(count,cmd,file,lcd) " {{{1
+  let rtp = pathogen#join(1,pathogen#split(&runtimepath))
+  let file = pathogen#runtime_findfile(a:file,a:count)
+  if file ==# ''
+    return "echoerr 'E345: Can''t find file \"".a:file."\" in runtimepath'"
+  elseif a:lcd
+    let path = file[0:-strlen(a:file)-2]
+    execute 'lcd `=path`'
+    return a:cmd.' '.fnameescape(a:file)
+  else
+    return a:cmd.' '.fnameescape(file)
+  endif
+endfunction " }}}1
+
+function! s:Findcomplete(A,L,P) " {{{1
+  let sep = pathogen#separator()
