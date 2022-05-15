@@ -14,3 +14,46 @@
 "               plugin, you agree that in no event will the copyright
 "               holder be liable for any damages resulting from the use
 "               of this software.
+"
+" Romans 1:16,17a : For I am not ashamed of the gospel of Christ, for it is {{{1
+" the power of God for salvation for everyone who believes; for the Jew first,
+" and also for the Greek.  For in it is revealed God's righteousness from
+" faith to faith.
+"redraw!|call DechoSep()|call inputsave()|call input("Press <cr> to continue")|call inputrestore()
+
+" ---------------------------------------------------------------------
+" Load Once: {{{1
+if exists("g:loaded_Align") || &cp
+ finish
+endif
+let g:loaded_Align = "v36"
+if v:version < 700
+ echohl WarningMsg
+ echo "***warning*** this version of Align needs vim 7.0"
+ echohl Normal
+ finish
+endif
+let s:keepcpo= &cpo
+set cpo&vim
+"DechoTabOn
+
+" ---------------------------------------------------------------------
+" Debugging Support: {{{1
+"if !exists("g:loaded_Decho") | runtime plugin/Decho.vim | endif
+
+" ---------------------------------------------------------------------
+" Options: {{{1
+if !exists("g:Align_xstrlen")
+ if &enc == "latin1" || $LANG == "en_US.UTF-8" || !has("multi_byte")
+  let g:Align_xstrlen= 0
+ else
+  let g:Align_xstrlen= 1
+ endif
+endif
+
+" ---------------------------------------------------------------------
+" Align#AlignCtrl: enter alignment patterns here {{{1
+"
+"   Styles   =  all alignment-break patterns are equivalent
+"            C  cycle through alignment-break pattern(s)
+"            l  left-justified alignment
