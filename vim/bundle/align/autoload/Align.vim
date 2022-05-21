@@ -57,3 +57,56 @@ endif
 "   Styles   =  all alignment-break patterns are equivalent
 "            C  cycle through alignment-break pattern(s)
 "            l  left-justified alignment
+"            r  right-justified alignment
+"            c  center alignment
+"            -  skip separator, treat as part of field
+"            :  treat rest of line as field
+"            +  repeat previous [lrc] style
+"            <  left justify separators
+"            >  right justify separators
+"            |  center separators
+"
+"   Builds   =  s:AlignPat  s:AlignCtrl  s:AlignPatQty
+"            C  s:AlignPat  s:AlignCtrl  s:AlignPatQty
+"            p  s:AlignPrePad
+"            P  s:AlignPostPad
+"            w  s:AlignLeadKeep
+"            W  s:AlignLeadKeep
+"            I  s:AlignLeadKeep
+"            l  s:AlignStyle
+"            r  s:AlignStyle
+"            -  s:AlignStyle
+"            +  s:AlignStyle
+"            :  s:AlignStyle
+"            c  s:AlignStyle
+"            g  s:AlignGPat
+"            v  s:AlignVPat
+"            <  s:AlignSep
+"            >  s:AlignSep
+"            |  s:AlignSep
+fun! Align#AlignCtrl(...)
+
+"  call Dfunc("Align#AlignCtrl(...) a:0=".a:0)
+
+  " save options that may be changed later
+  call s:SaveUserOptions()
+
+  " turn ignorecase off
+  setlocal noic
+
+  " clear visual mode so that old visual-mode selections don't
+  " get applied to new invocations of Align().
+  if v:version < 602
+   if !exists("s:Align_gavemsg")
+	let s:Align_gavemsg= 1
+    echomsg "Align needs at least Vim version 6.2 to clear visual-mode selection"
+   endif
+  elseif exists("s:dovisclear")
+"   call Decho("clearing visual mode a:0=".a:0." a:1<".a:1.">")
+   let clearvmode= visualmode(1)
+  endif
+
+  " set up a list akin to an argument list
+  if a:0 > 0
+   let A= s:QArgSplitter(a:1)
+  else
