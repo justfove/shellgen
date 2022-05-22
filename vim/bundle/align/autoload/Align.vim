@@ -110,3 +110,56 @@ fun! Align#AlignCtrl(...)
   if a:0 > 0
    let A= s:QArgSplitter(a:1)
   else
+   let A=[0]
+  endif
+
+  if A[0] > 0
+   let style = A[1]
+
+   " Check for bad separator patterns (zero-length matches)
+   " (but zero-length patterns for g/v is ok)
+   if style !~# '[gv]'
+    let ipat= 2
+    while ipat <= A[0]
+     if "" =~ A[ipat]
+      echoerr "(AlignCtrl) separator<".A[ipat]."> matches zero-length string"
+	  call s:RestoreUserOptions()
+"	  call Dret("Align#AlignCtrl")
+      return
+     endif
+     let ipat= ipat + 1
+    endwhile
+   endif
+  endif
+"  call Decho("(AlignCtrl) passed bad-separator pattern check (no zero-length matches)")
+
+"  call Decho("(AlignCtrl) A[0]=".A[0])
+  if !exists("s:AlignStyle")
+   let s:AlignStyle= 'l'
+  endif
+  if !exists("s:AlignPrePad")
+   let s:AlignPrePad= 0
+  endif
+  if !exists("s:AlignPostPad")
+   let s:AlignPostPad= 0
+  endif
+  if !exists("s:AlignLeadKeep")
+   let s:AlignLeadKeep= 'w'
+  endif
+
+  if A[0] == 0
+   " ----------------------
+   " List current selection
+   " ----------------------
+   if !exists("s:AlignPatQty")
+	let s:AlignPatQty= 0
+   endif
+   echo "AlignCtrl<".s:AlignCtrl."> qty=".s:AlignPatQty." AlignStyle<".s:AlignStyle."> Padding<".s:AlignPrePad."|".s:AlignPostPad."> LeadingWS=".s:AlignLeadKeep." AlignSep=".s:AlignSep
+"   call Decho("(AlignCtrl) AlignCtrl<".s:AlignCtrl."> qty=".s:AlignPatQty." AlignStyle<".s:AlignStyle."> Padding<".s:AlignPrePad."|".s:AlignPostPad."> LeadingWS=".s:AlignLeadKeep." AlignSep=".s:AlignSep)
+   if      exists("s:AlignGPat") && !exists("s:AlignVPat")
+	echo "AlignGPat<".s:AlignGPat.">"
+   elseif !exists("s:AlignGPat") &&  exists("s:AlignVPat")
+	echo "AlignVPat<".s:AlignVPat.">"
+   elseif exists("s:AlignGPat") &&  exists("s:AlignVPat")
+	echo "AlignGPat<".s:AlignGPat."> AlignVPat<".s:AlignVPat.">"
+   endif
