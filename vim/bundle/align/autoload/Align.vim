@@ -163,3 +163,59 @@ fun! Align#AlignCtrl(...)
    elseif exists("s:AlignGPat") &&  exists("s:AlignVPat")
 	echo "AlignGPat<".s:AlignGPat."> AlignVPat<".s:AlignVPat.">"
    endif
+   let ipat= 1
+   while ipat <= s:AlignPatQty
+	echo "Pat".ipat."<".s:AlignPat_{ipat}.">"
+"	call Decho("(AlignCtrl) Pat".ipat."<".s:AlignPat_{ipat}.">")
+	let ipat= ipat + 1
+   endwhile
+
+  else
+   " ----------------------------------
+   " Process alignment control settings
+   " ----------------------------------
+"   call Decho("process the alignctrl settings")
+"   call Decho("style<".style.">")
+
+   if style ==? "default"
+     " Default:  preserve initial leading whitespace, left-justified,
+     "           alignment on '=', one space padding on both sides
+	 if exists("s:AlignCtrlStackQty")
+	  " clear AlignCtrl stack
+      while s:AlignCtrlStackQty > 0
+	   call Align#AlignPop()
+	  endwhile
+	  unlet s:AlignCtrlStackQty
+	 endif
+	 " Set AlignCtrl to its default value
+     call Align#AlignCtrl("Ilp1P1=<",'=')
+	 call Align#AlignCtrl("g")
+	 call Align#AlignCtrl("v")
+	 let s:dovisclear = 1
+	 call s:RestoreUserOptions()
+"	 call Dret("Align#AlignCtrl")
+	 return
+   endif
+
+   if style =~# 'm'
+	" map support: Do an AlignPush now and the next call to Align()
+	"              will do an AlignPop at exit
+"	call Decho("style case m: do AlignPush")
+	call Align#AlignPush()
+	let s:DoAlignPop= 1
+   endif
+
+   " = : record a list of alignment patterns that are equivalent
+   if style =~# "=" || (A[0] >= 2 && style !~# "C" && s:AlignCtrl =~# '=')
+"	call Decho("style case =: record list of equiv alignment patterns")
+    let s:AlignCtrl  = '='
+	if A[0] >= 2
+     let s:AlignPatQty= 1
+     let s:AlignPat_1 = A[2]
+     let ipat         = 3
+     while ipat <= A[0]
+      let s:AlignPat_1 = s:AlignPat_1.'\|'.A[ipat]
+      let ipat         = ipat + 1
+     endwhile
+     let s:AlignPat_1= '\('.s:AlignPat_1.'\)'
+"     call Decho("AlignCtrl<".s:AlignCtrl."> AlignPat<".s:AlignPat_1.">")
