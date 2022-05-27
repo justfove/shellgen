@@ -306,3 +306,55 @@ fun! Align#AlignCtrl(...)
    if style =~# '[<>|]'
 "	call Decho("style case [-lrc+:]: separator justification")
 	let s:AlignSep= substitute(style,'[^<>|]','','g')
+"	call Decho("AlignSep ".s:AlignSep)
+   endif
+  endif
+
+  " sanity
+  if !exists("s:AlignCtrl")
+   let s:AlignCtrl= '='
+  endif
+
+  " restore options and return
+  call s:RestoreUserOptions()
+"  call Dret("Align#AlignCtrl ".s:AlignCtrl.'p'.s:AlignPrePad.'P'.s:AlignPostPad.s:AlignLeadKeep.s:AlignStyle)
+  return s:AlignCtrl.'p'.s:AlignPrePad.'P'.s:AlignPostPad.s:AlignLeadKeep.s:AlignStyle
+endfun
+
+" ---------------------------------------------------------------------
+" s:MakeSpace: returns a string with spacecnt blanks {{{1
+fun! s:MakeSpace(spacecnt)
+"  call Dfunc("MakeSpace(spacecnt=".a:spacecnt.")")
+  let str      = ""
+  let spacecnt = a:spacecnt
+  while spacecnt > 0
+   let str      = str . " "
+   let spacecnt = spacecnt - 1
+  endwhile
+"  call Dret("MakeSpace <".str.">")
+  return str
+endfun
+
+" ---------------------------------------------------------------------
+" Align#Align: align selected text based on alignment pattern(s) {{{1
+fun! Align#Align(hasctrl,...) range
+"  call Dfunc("Align#Align(hasctrl=".a:hasctrl.",...) a:0=".a:0)
+
+  " sanity checks
+  if string(a:hasctrl) != "0" && string(a:hasctrl) != "1"
+   echohl Error|echo 'usage: Align#Align(hasctrl<'.a:hasctrl.'> (should be 0 or 1),"separator(s)"  (you have '.a:0.') )'|echohl None
+"   call Dret("Align#Align")
+   return
+  endif
+  if exists("s:AlignStyle") && s:AlignStyle == ":"
+   echohl Error |echo '(Align#Align) your AlignStyle is ":", which implies "do-no-alignment"!'|echohl None
+"   call Dret("Align#Align")
+   return
+  endif
+
+  " save user options
+  call s:SaveUserOptions()
+
+  " set up a list akin to an argument list
+  if a:0 > 0
+   let A= s:QArgSplitter(a:1)
