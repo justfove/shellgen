@@ -407,3 +407,42 @@ fun! Align#Align(hasctrl,...) range
     let s:AlignPat_1 = A[1 + hasctrl]
     let s:AlignPatQty= 1
     let ipat         = 2 + hasctrl
+    while ipat <= A[0]
+     let s:AlignPat_1 = s:AlignPat_1.'\|'.A[ipat]
+     let ipat         = ipat + 1
+    endwhile
+    let s:AlignPat_1= '\('.s:AlignPat_1.'\)'
+"    call Decho("AlignCtrl<".s:AlignCtrl."> AlignPat<".s:AlignPat_1.">")
+
+   elseif s:AlignCtrl =~# 'C'
+    "c : cycle through alignment pattern(s)
+"    call Decho("AlignCtrl: cycle through alignment pattern(s)")
+    let s:AlignCtrl  = 'C'
+    let s:AlignPatQty= A[0] - hasctrl
+    let ipat         = 1
+    while ipat <= s:AlignPatQty
+     let s:AlignPat_{ipat}= A[(ipat + hasctrl)]
+"     call Decho("AlignCtrl<".s:AlignCtrl."> AlignQty=".s:AlignPatQty." AlignPat_".ipat."<".s:AlignPat_{ipat}.">")
+     let ipat= ipat + 1
+    endwhile
+   endif
+  endif
+
+  " Initialize so that begline<endline and begcol<endcol.
+  " Ragged right: check if the column associated with '< or '>
+  "               is greater than the line's string length -> ragged right.
+  " Have to be careful about visualmode() -- it returns the last visual
+  " mode used whether or not it was used currently.
+  let begcol   = virtcol("'<")-1
+  let endcol   = virtcol("'>")-1
+  if begcol > endcol
+   let begcol  = virtcol("'>")-1
+   let endcol  = virtcol("'<")-1
+  endif
+"  call Decho("begcol=".begcol." endcol=".endcol)
+  let begline  = a:firstline
+  let endline  = a:lastline
+  if begline > endline
+   let begline = a:lastline
+   let endline = a:firstline
+  endif
