@@ -219,3 +219,45 @@ fun! Align#AlignCtrl(...)
      endwhile
      let s:AlignPat_1= '\('.s:AlignPat_1.'\)'
 "     call Decho("AlignCtrl<".s:AlignCtrl."> AlignPat<".s:AlignPat_1.">")
+	endif
+
+    "c : cycle through alignment pattern(s)
+   elseif style =~# 'C' || (A[0] >= 2 && s:AlignCtrl =~# '=')
+"	call Decho("style case C: cycle through alignment pattern(s)")
+    let s:AlignCtrl  = 'C'
+	if A[0] >= 2
+     let s:AlignPatQty= A[0] - 1
+     let ipat         = 1
+     while ipat < A[0]
+      let s:AlignPat_{ipat}= A[ipat+1]
+"     call Decho("AlignCtrl<".s:AlignCtrl."> AlignQty=".s:AlignPatQty." AlignPat_".ipat."<".s:AlignPat_{ipat}.">")
+      let ipat= ipat + 1
+     endwhile
+	endif
+   endif
+
+   if style =~# 'p'
+    let s:AlignPrePad= substitute(style,'^.*p\(\d\+\).*$','\1','')
+"	call Decho("style case p".s:AlignPrePad.": pre-separator padding")
+    if s:AlignPrePad == ""
+     echoerr "(AlignCtrl) 'p' needs to be followed by a numeric argument'"
+	 call s:RestoreUserOptions()
+"	 call Dret("Align#AlignCtrl")
+     return
+	endif
+   endif
+
+   if style =~# 'P'
+    let s:AlignPostPad= substitute(style,'^.*P\(\d\+\).*$','\1','')
+"	call Decho("style case P".s:AlignPostPad.": post-separator padding")
+    if s:AlignPostPad == ""
+     echoerr "(AlignCtrl) 'P' needs to be followed by a numeric argument'"
+	 call s:RestoreUserOptions()
+"	 call Dret("Align#AlignCtrl")
+     return
+	endif
+   endif
+
+   if     style =~# 'w'
+"	call Decho("style case w: ignore leading whitespace")
+	let s:AlignLeadKeep= 'w'
