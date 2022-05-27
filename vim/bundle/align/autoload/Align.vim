@@ -358,3 +358,52 @@ fun! Align#Align(hasctrl,...) range
   " set up a list akin to an argument list
   if a:0 > 0
    let A= s:QArgSplitter(a:1)
+  else
+   let A=[0]
+  endif
+
+  " if :Align! was used, then the first argument is (should be!) an AlignCtrl string
+  " Note that any alignment control set this way will be temporary.
+  let hasctrl= a:hasctrl
+"  call Decho("hasctrl=".hasctrl)
+  if a:hasctrl && A[0] >= 1
+"   call Decho("Align! : using A[1]<".A[1]."> for AlignCtrl")
+   if A[1] =~ '[gv]'
+   	let hasctrl= hasctrl + 1
+	call Align#AlignCtrl('m')
+    call Align#AlignCtrl(A[1],A[2])
+"    call Decho("Align! : also using A[2]<".A[2]."> for AlignCtrl")
+   elseif A[1] !~ 'm'
+    call Align#AlignCtrl(A[1]."m")
+   else
+    call Align#AlignCtrl(A[1])
+   endif
+  endif
+
+  " Check for bad separator patterns (zero-length matches)
+  let ipat= 1 + hasctrl
+  while ipat <= A[0]
+   if "" =~ A[ipat]
+	echoerr "(Align) separator<".A[ipat]."> matches zero-length string"
+	call s:RestoreUserOptions()
+"    call Dret("Align#Align")
+	return
+   endif
+   let ipat= ipat + 1
+  endwhile
+
+  " record current search pattern for subsequent restoration
+  " (these are all global-only options)
+  set noic report=10000 nohls
+
+  if A[0] > hasctrl
+  " Align will accept a list of separator regexps
+"   call Decho("A[0]=".A[0].": accepting list of separator regexp")
+
+   if s:AlignCtrl =~# "="
+   	"= : consider all separators to be equivalent
+"    call Decho("AlignCtrl: record list of equivalent alignment patterns")
+    let s:AlignCtrl  = '='
+    let s:AlignPat_1 = A[1 + hasctrl]
+    let s:AlignPatQty= 1
+    let ipat         = 2 + hasctrl
