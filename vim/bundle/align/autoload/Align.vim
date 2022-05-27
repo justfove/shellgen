@@ -261,3 +261,48 @@ fun! Align#AlignCtrl(...)
    if     style =~# 'w'
 "	call Decho("style case w: ignore leading whitespace")
 	let s:AlignLeadKeep= 'w'
+   elseif style =~# 'W'
+"	call Decho("style case W: keep leading whitespace")
+	let s:AlignLeadKeep= 'W'
+   elseif style =~# 'I'
+"	call Decho("style case I: retain initial leading whitespace")
+	let s:AlignLeadKeep= 'I'
+   endif
+
+   if style =~# 'g'
+	" first list item is a "g" selector pattern
+"	call Decho("style case g: global selector pattern")
+	if A[0] < 2
+	 if exists("s:AlignVPat")
+	  unlet s:AlignVPat
+"	  call Decho("unlet s:AlignGPat")
+	 endif
+	else
+	 let s:AlignGPat= A[2]
+"	 call Decho("s:AlignGPat<".s:AlignGPat.">")
+	endif
+   elseif style =~# 'v'
+	" first list item is a "v" selector pattern
+"	call Decho("style case v: global selector anti-pattern")
+	if A[0] < 2
+	 if exists("s:AlignGPat")
+	  unlet s:AlignGPat
+"	  call Decho("unlet s:AlignVPat")
+	 endif
+	else
+	 let s:AlignVPat= A[2]
+"	 call Decho("s:AlignVPat<".s:AlignVPat.">")
+	endif
+   endif
+
+    "[-lrc+:] : set up s:AlignStyle
+   if style =~# '[-lrc+:*]'
+"	call Decho("style case [-lrc+:]: field justification")
+    let s:AlignStyle= substitute(style,'[^-lrc:+*]','','g')
+"    call Decho("AlignStyle<".s:AlignStyle.">")
+   endif
+
+   "[<>|] : set up s:AlignSep
+   if style =~# '[<>|]'
+"	call Decho("style case [-lrc+:]: separator justification")
+	let s:AlignSep= substitute(style,'[^<>|]','','g')
