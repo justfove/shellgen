@@ -446,3 +446,48 @@ fun! Align#Align(hasctrl,...) range
    let begline = a:lastline
    let endline = a:firstline
   endif
+
+  " Expand range to cover align-able lines when the given range is only the current line.
+  " Look for the first line above the current line that matches the first separator pattern, and
+  " look for the last  line below the current line that matches the first separator pattern.
+  if begline == endline
+"   call Decho("case begline == endline")
+   if !exists("s:AlignPat_{1}")
+	echohl Error|echo "(Align) no separators specified!"|echohl None
+	call s:RestoreUserOptions()
+"    call Dret("Align#Align")
+    return
+   endif
+   let seppat = s:AlignPat_{1}
+   let begline= search('^\%(\%('.seppat.'\)\@!.\)*$',"bnW")
+   if begline == 0|let begline= 1|else|let begline= begline + 1|endif
+   let endline= search('^\%(\%('.seppat.'\)\@!.\)*$',"nW")
+   if endline == 0|let endline= line("$")|else|let endline= endline - 1|endif
+"   call Decho("begline=".begline." endline=".endline." curline#".line("."))
+  endif
+"  call Decho("begline=".begline." endline=".endline)
+  let fieldcnt = 0
+  if (begline == line("'>") && endline == line("'<")) || (begline == line("'<") && endline == line("'>"))
+   let vmode= visualmode()
+"   call Decho("vmode=".vmode)
+   if vmode == "\<c-v>"
+    let ragged   = ( col("'>") > s:Strlen(getline("'>")) || col("'<") > s:Strlen(getline("'<")) )
+   else
+	let ragged= 1
+   endif
+  else
+   let ragged= 1
+  endif
+  if ragged
+   let begcol= 0
+  endif
+"  call Decho("lines[".begline.",".endline."] col[".begcol.",".endcol."] ragged=".ragged." AlignCtrl<".s:AlignCtrl.">")
+
+  " record initial whitespace
+  if s:AlignLeadKeep == 'W'
+   let wskeep = map(getline(begline,endline),"substitute(v:val,'^\\(\\s*\\).\\{-}$','\\1','')")
+  endif
+
+  " Align needs these options
+  setl et
+  set  paste
