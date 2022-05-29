@@ -532,3 +532,44 @@ fun! Align#Align(hasctrl,...) range
 
    let line= begline
    while line <= endline
+    " Process each line
+    let txt = getline(line)
+"    call Decho(" ")
+"    call Decho("Pass".pass.": Line ".line." <".txt.">")
+
+    " AlignGPat support: allows a selector pattern (akin to g/selector/cmd )
+    if exists("s:AlignGPat")
+"	 call Decho("Pass".pass.": AlignGPat<".s:AlignGPat.">")
+	 if match(txt,s:AlignGPat) == -1
+"	  call Decho("Pass".pass.": skipping")
+	  let line= line + 1
+	  continue
+	 endif
+    endif
+
+    " AlignVPat support: allows a selector pattern (akin to v/selector/cmd )
+    if exists("s:AlignVPat")
+"	 call Decho("Pass".pass.": AlignVPat<".s:AlignVPat.">")
+	 if match(txt,s:AlignVPat) != -1
+"	  call Decho("Pass".pass.": skipping")
+	  let line= line + 1
+	  continue
+	 endif
+    endif
+
+	" Always skip blank lines
+	if match(txt,'^\s*$') != -1
+"	  call Decho("Pass".pass.": skipping")
+	 let line= line + 1
+	 continue
+	endif
+
+    " Extract visual-block selected text (init bgntxt, endtxt)
+     let txtlen= s:Strlen(txt)
+    if begcol > 0
+	 " Record text to left of selected area
+     let bgntxt= strpart(txt,0,begcol)
+"	  call Decho("Pass".pass.": record text to left: bgntxt<".bgntxt.">")
+    elseif s:AlignLeadKeep == 'W'
+	 let bgntxt= substitute(txt,'^\(\s*\).\{-}$','\1','')
+"	  call Decho("Pass".pass.": retaining all leading ws: bgntxt<".bgntxt.">")
