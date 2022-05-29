@@ -491,3 +491,44 @@ fun! Align#Align(hasctrl,...) range
   " Align needs these options
   setl et
   set  paste
+
+  " convert selected range of lines to use spaces instead of tabs
+  " but if first line's initial white spaces are to be retained
+  " then use 'em
+  if begcol <= 0 && s:AlignLeadKeep == 'I'
+   " retain first leading whitespace for all subsequent lines
+   let bgntxt= substitute(getline(begline),'^\(\s*\).\{-}$','\1','')
+
+   " exception: retain first leading whitespace predicated on g and v patterns
+   "            if such a selected line exists
+   if exists("s:AlignGPat")
+	let firstgline= search(s:AlignGPat,"cnW",endline)
+	if firstgline > 0
+	 let bgntxt= substitute(getline(firstgline),'^\(\s*\).\{-}$','\1','')
+	endif
+   elseif exists("s:AlignVPat")
+	let firstvline= search(s:AlignVPat,"cnW",endline)
+	if firstvline > 0
+	 let bgntxt= substitute('^\%(\%('.getline(firstvline).')\@!\)*$','^\(\s*\).\{-}$','\1','')
+	endif
+   endif
+"   call Decho("retaining 1st leading whitespace: bgntxt<".bgntxt.">")
+   let &l:et= s:keep_et
+  endif
+  exe begline.",".endline."ret"
+
+  " record transformed to spaces leading whitespace
+  if s:AlignLeadKeep == 'W'
+   let wsblanks = map(getline(begline,endline),"substitute(v:val,'^\\(\\s*\\).\\{-}$','\\1','')")
+  endif
+
+  " Execute two passes
+  " First  pass: collect alignment data (max field sizes)
+  " Second pass: perform alignment
+  let pass= 1
+  while pass <= 2
+"   call Decho(" ")
+"   call Decho("---- Pass ".pass.": ----")
+
+   let line= begline
+   while line <= endline
