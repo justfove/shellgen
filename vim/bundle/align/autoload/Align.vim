@@ -573,3 +573,35 @@ fun! Align#Align(hasctrl,...) range
     elseif s:AlignLeadKeep == 'W'
 	 let bgntxt= substitute(txt,'^\(\s*\).\{-}$','\1','')
 "	  call Decho("Pass".pass.": retaining all leading ws: bgntxt<".bgntxt.">")
+    elseif s:AlignLeadKeep == 'w' || !exists("bgntxt")
+	 " No beginning text
+	 let bgntxt= ""
+"	  call Decho("Pass".pass.": no beginning text")
+    endif
+    if ragged
+	 let endtxt= ""
+    else
+     " Elide any text lying outside selected columnar region
+     let endtxt= strpart(txt,endcol+1,txtlen-endcol)
+     let txt   = strpart(txt,begcol,endcol-begcol+1)
+    endif
+"    call Decho(" ")
+"    call Decho("Pass".pass.": bgntxt<".bgntxt.">")
+"    call Decho("Pass".pass.":    txt<". txt  .">")
+"    call Decho("Pass".pass.": endtxt<".endtxt.">")
+	if !exists("s:AlignPat_{1}")
+	 echohl Error|echo "(Align) no separators specified!"|echohl None
+	 call s:RestoreUserOptions()
+"     call Dret("Align#Align")
+	 return
+	endif
+
+    " Initialize for both passes
+    let seppat      = s:AlignPat_{1}
+    let ifield      = 1
+    let ipat        = 1
+    let bgnfield    = 0
+    let endfield    = 0
+    let alignstyle  = s:AlignStyle
+    let doend       = 1
+	let newtxt      = ""
