@@ -695,3 +695,44 @@ fun! Align#Align(hasctrl,...) range
 	    let FieldSize_{ifield}= fieldlen
 "	    call Decho("Pass".pass.":  set FieldSize_{".ifield."}=".FieldSize_{ifield}." <".field.">")
 	   elseif fieldlen > FieldSize_{ifield}
+	    let FieldSize_{ifield}= fieldlen
+"	    call Decho("Pass".pass.": oset FieldSize_{".ifield."}=".FieldSize_{ifield}." <".field.">")
+	   endif
+	   let sSepSize= "SepSize_".ifield
+	   if !exists(sSepSize)
+		let SepSize_{ifield}= seplen
+"	    call Decho(" set SepSize_{".ifield."}=".SepSize_{ifield}." <".field.">")
+	   elseif seplen > SepSize_{ifield}
+		let SepSize_{ifield}= seplen
+"	    call Decho("Pass".pass.": oset SepSize_{".ifield."}=".SepSize_{ifield}." <".field.">")
+	   endif
+
+	  else
+	   " ---------------------------------------------------------------------
+	   " Pass 2: Perform Alignment
+	   let prepad       = strpart(alignprepad,0,1)
+	   let postpad      = strpart(alignpostpad,0,1)
+	   let alignprepad  = strpart(alignprepad,1).strpart(alignprepad,0,1)
+	   let alignpostpad = strpart(alignpostpad,1).strpart(alignpostpad,0,1)
+	   let field        = substitute(strpart(txt,bgnfield,endfield-bgnfield),'^\s*\(.\{-}\)\s*$','\1','')
+       if s:AlignLeadKeep == 'W'
+	    let field = bgntxt.field
+	    let bgntxt= ""
+	   endif
+	   if doend == 2
+		let prepad = 0
+		let postpad= 0
+	   endif
+	   let fieldlen   = s:Strlen(field)
+	   let sep        = s:MakeSpace(prepad).strpart(txt,endfield,sepfield-endfield).s:MakeSpace(postpad)
+	   if seplen < SepSize_{ifield}
+		if alignsepop == "<"
+		 " left-justify separators
+		 let sep       = sep.s:MakeSpace(SepSize_{ifield}-seplen)
+		elseif alignsepop == ">"
+		 " right-justify separators
+		 let sep       = s:MakeSpace(SepSize_{ifield}-seplen).sep
+		else
+		 " center-justify separators
+		 let sepleft   = (SepSize_{ifield} - seplen)/2
+		 let sepright  = SepSize_{ifield} - seplen - sepleft
