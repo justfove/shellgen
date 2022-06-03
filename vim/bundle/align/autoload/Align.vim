@@ -657,3 +657,41 @@ fun! Align#Align(hasctrl,...) range
 "	   call Decho("Pass".pass.": endfield=match(txt<".txt.">,seppat<".seppat.">,bgnfield=".bgnfield.")=".endfield." alignop=".alignop)
 	   " a '*' acts like a '-' while the g:AlignSkip function reference is true except that alignop doesn't advance
 	   while g:AlignSkip(line,endfield) && endfield != -1
+	    let endfield  = match(txt,seppat,skipfield)
+	    let sepfield  = matchend(txt,seppat,skipfield)
+	    let skipfield = sepfield
+"	    call Decho("Pass".pass.": extend field: endfield<".strpart(txt,bgnfield,endfield-bgnfield)."> alignop<".alignop."> alignstyle<".alignstyle.">")
+	   endwhile
+	   let alignop   = strpart(alignstyle,0,1)
+	   let alignstyle= strpart(alignstyle,1).strpart(alignstyle,0,1)
+"	   call Decho("Pass".pass.": endfield=match(txt<".txt.">,seppat<".seppat.">,bgnfield=".bgnfield.")=".endfield." alignop=".alignop." (after *)")
+	  endif
+
+	 " Mark eof: Extend field if alignop is '-'
+	 while alignop == '-' && endfield != -1
+	  let endfield  = match(txt,seppat,skipfield)
+	  let sepfield  = matchend(txt,seppat,skipfield)
+	  let skipfield = sepfield
+	  let alignop   = strpart(alignstyle,0,1)
+	  let alignstyle= strpart(alignstyle,1).strpart(alignstyle,0,1)
+"      call Decho("Pass".pass.": extend field: endfield<".strpart(txt,bgnfield,endfield-bgnfield)."> alignop<".alignop."> alignstyle<".alignstyle.">")
+	 endwhile
+	 let seplen= sepfield - endfield
+"	 call Decho("Pass".pass.": seplen=[sepfield=".sepfield."] - [endfield=".endfield."]=".seplen)
+
+	 if endfield != -1
+	  if pass == 1
+	   " ---------------------------------------------------------------------
+	   " Pass 1: Update FieldSize to max
+"	   call Decho("Pass".pass.": before lead/trail remove: field<".strpart(txt,bgnfield,endfield-bgnfield).">")
+	   let field      = substitute(strpart(txt,bgnfield,endfield-bgnfield),'^\s*\(.\{-}\)\s*$','\1','')
+       if s:AlignLeadKeep == 'W'
+	    let field = bgntxt.field
+	    let bgntxt= ""
+	   endif
+	   let fieldlen   = s:Strlen(field)
+	   let sFieldSize = "FieldSize_".ifield
+	   if !exists(sFieldSize)
+	    let FieldSize_{ifield}= fieldlen
+"	    call Decho("Pass".pass.":  set FieldSize_{".ifield."}=".FieldSize_{ifield}." <".field.">")
+	   elseif fieldlen > FieldSize_{ifield}
