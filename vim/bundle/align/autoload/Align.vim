@@ -605,3 +605,55 @@ fun! Align#Align(hasctrl,...) range
     let alignstyle  = s:AlignStyle
     let doend       = 1
 	let newtxt      = ""
+    let alignprepad = s:AlignPrePad
+    let alignpostpad= s:AlignPostPad
+	let alignsep    = s:AlignSep
+	let alignophold = " "
+	let alignop     = 'l'
+"	call Decho("Pass".pass.": initial alignstyle<".alignstyle."> seppat<".seppat.">")
+
+    " Process each field on the line
+    while doend > 0
+
+	  " C-style: cycle through pattern(s)
+     if s:AlignCtrl == 'C' && doend == 1
+	  let seppat   = s:AlignPat_{ipat}
+"	  call Decho("Pass".pass.": processing field: AlignCtrl=".s:AlignCtrl." ipat=".ipat." seppat<".seppat.">")
+	  let ipat     = ipat + 1
+	  if ipat > s:AlignPatQty
+	   let ipat = 1
+	  endif
+     endif
+
+	 " cyclic alignment/justification operator handling
+	 let alignophold  = alignop
+	 let alignop      = strpart(alignstyle,0,1)
+	 if alignop == '+' || doend == 2
+	  let alignop= alignophold
+	 else
+	  let alignstyle   = strpart(alignstyle,1).strpart(alignstyle,0,1)
+	  let alignopnxt   = strpart(alignstyle,0,1)
+	  if alignop == ':'
+	   let seppat  = '$'
+	   let doend   = 2
+"	   call Decho("Pass".pass.": alignop<:> case: setting seppat<$> doend==2")
+	  endif
+	 endif
+
+	 " cyclic separator alignment specification handling
+	 let alignsepop= strpart(alignsep,0,1)
+	 let alignsep  = strpart(alignsep,1).alignsepop
+
+	 " ------------------------------------------------------
+	 " mark end-of-field and the subsequent end-of-separator.
+	 " ------------------------------------------------------
+     let endfield = match(txt,seppat,bgnfield)
+	 let sepfield = matchend(txt,seppat,bgnfield)
+     let skipfield= sepfield
+"	 call Decho("Pass".pass.": endfield=match(txt<".txt.">,seppat<".seppat.">,bgnfield=".bgnfield.")=".endfield." alignop=".alignop)
+
+	 " Mark eof: Extend field if alignop is '*' and AlignSkip() is true.
+	  if alignop == '*' && exists("g:AlignSkip") && type(g:AlignSkip) == 2
+"	   call Decho("Pass".pass.": endfield=match(txt<".txt.">,seppat<".seppat.">,bgnfield=".bgnfield.")=".endfield." alignop=".alignop)
+	   " a '*' acts like a '-' while the g:AlignSkip function reference is true except that alignop doesn't advance
+	   while g:AlignSkip(line,endfield) && endfield != -1
