@@ -736,3 +736,45 @@ fun! Align#Align(hasctrl,...) range
 		 " center-justify separators
 		 let sepleft   = (SepSize_{ifield} - seplen)/2
 		 let sepright  = SepSize_{ifield} - seplen - sepleft
+		 let sep       = s:MakeSpace(sepleft).sep.s:MakeSpace(sepright)
+		endif
+	   endif
+	   let spaces = FieldSize_{ifield} - fieldlen
+"	   call Decho("Pass".pass.": Field #".ifield."<".field."> spaces=".spaces." be[".bgnfield.",".endfield."] pad=".prepad.','.postpad." FS_".ifield."<".FieldSize_{ifield}."> sep<".sep."> ragged=".ragged." doend=".doend." alignop<".alignop.">")
+
+	    " Perform alignment according to alignment style justification
+	   if spaces > 0
+	    if     alignop == 'c'
+		 " center the field
+	     let spaceleft = spaces/2
+	     let spaceright= FieldSize_{ifield} - spaceleft - fieldlen
+	     let newtxt    = newtxt.s:MakeSpace(spaceleft).field.s:MakeSpace(spaceright).sep
+	    elseif alignop == 'r'
+		 " right justify the field
+	     let newtxt= newtxt.s:MakeSpace(spaces).field.sep
+	    elseif ragged && doend == 2
+		 " left justify rightmost field (no trailing blanks needed)
+	     let newtxt= newtxt.field
+		else
+		 " left justfiy the field
+	     let newtxt= newtxt.field.s:MakeSpace(spaces).sep
+	    endif
+	   elseif ragged && doend == 2
+		" field at maximum field size and no trailing blanks needed
+	    let newtxt= newtxt.field
+	   else
+		" field is at maximum field size already
+	    let newtxt= newtxt.field.sep
+	   endif
+"	   call Decho("Pass".pass.": newtxt<".newtxt.">")
+	  endif	" pass 1/2
+
+	  " bgnfield indexes to end of separator at right of current field
+	  " Update field counter
+	  let bgnfield= sepfield
+      let ifield  = ifield + 1
+	  if doend == 2
+	   let doend= 0
+	  endif
+	   " handle end-of-text as end-of-field
+	 elseif doend == 1
