@@ -778,3 +778,39 @@ fun! Align#Align(hasctrl,...) range
 	  endif
 	   " handle end-of-text as end-of-field
 	 elseif doend == 1
+	  let seppat  = '$'
+	  let doend   = 2
+	 else
+	  let doend   = 0
+	 endif		" endfield != -1
+    endwhile	" doend loop (as well as regularly separated fields)
+
+	if pass == 2
+	 " Write altered line to buffer
+"     call Decho("Pass".pass.": bgntxt<".bgntxt."> line=".line)
+"     call Decho("Pass".pass.": newtxt<".newtxt.">")
+"     call Decho("Pass".pass.": endtxt<".endtxt.">")
+	 keepj call setline(line,bgntxt.newtxt.endtxt)
+	endif
+
+    let line = line + 1
+   endwhile	" line loop
+
+   let pass= pass + 1
+  endwhile	" pass loop
+"  call Decho("end of two pass loop")
+
+  " restore original leading whitespace
+  if s:AlignLeadKeep == 'W'
+   let iline= begline
+   let i    = 0
+"   call Decho("restore original leading whitespace")
+   while iline <= endline
+"	call Decho("exe ".iline."s/^".wsblanks[i]."/".wskeep[i]."/")
+	exe "keepj ".iline."s/^".wsblanks[i]."/".wskeep[i]."/"
+	let iline= iline + 1
+	let i    = i + 1
+   endwhile
+  endif
+
+  if exists("s:DoAlignPop")
