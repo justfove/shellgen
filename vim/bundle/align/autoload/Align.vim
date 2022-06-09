@@ -814,3 +814,43 @@ fun! Align#Align(hasctrl,...) range
   endif
 
   if exists("s:DoAlignPop")
+   " AlignCtrl Map support
+   call Align#AlignPop()
+   unlet s:DoAlignPop
+  endif
+
+  " restore user options and return
+  call s:RestoreUserOptions()
+"  call Dret("Align#Align")
+  return
+endfun
+
+" ---------------------------------------------------------------------
+" Align#AlignPush: this command/function pushes an alignment control string onto a stack {{{1
+fun! Align#AlignPush()
+"  call Dfunc("Align#AlignPush()")
+
+  " initialize the stack
+  if !exists("s:AlignCtrlStackQty")
+   let s:AlignCtrlStackQty= 1
+  else
+   let s:AlignCtrlStackQty= s:AlignCtrlStackQty + 1
+  endif
+
+  " construct an AlignCtrlStack entry
+  if !exists("s:AlignSep")
+   let s:AlignSep= ''
+  endif
+  let s:AlignCtrlStack_{s:AlignCtrlStackQty}= s:AlignCtrl.'p'.s:AlignPrePad.'P'.s:AlignPostPad.s:AlignLeadKeep.s:AlignStyle.s:AlignSep
+"  call Decho("AlignPush: AlignCtrlStack_".s:AlignCtrlStackQty."<".s:AlignCtrlStack_{s:AlignCtrlStackQty}.">")
+
+  " push [GV] patterns onto their own stack
+  if exists("s:AlignGPat")
+   let s:AlignGPat_{s:AlignCtrlStackQty}= s:AlignGPat
+  else
+   let s:AlignGPat_{s:AlignCtrlStackQty}=  ""
+  endif
+  if exists("s:AlignVPat")
+   let s:AlignVPat_{s:AlignCtrlStackQty}= s:AlignVPat
+  else
+   let s:AlignVPat_{s:AlignCtrlStackQty}=  ""
