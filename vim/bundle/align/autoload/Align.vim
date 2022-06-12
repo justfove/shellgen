@@ -904,3 +904,46 @@ fun! Align#AlignPop()
 "  call Dret("Align#AlignPop <".retval."> : AlignCtrlStackQty=".s:AlignCtrlStackQty)
   return retval
 endfun
+
+" ---------------------------------------------------------------------
+" Align#AlignReplaceQuotedSpaces: {{{1
+fun! Align#AlignReplaceQuotedSpaces()
+"  call Dfunc("Align#AlignReplaceQuotedSpaces()")
+
+  let l:line          = getline(line("."))
+  let l:linelen      = s:Strlen(l:line)
+  let l:startingPos   = 0
+  let l:startQuotePos = 0
+  let l:endQuotePos   = 0
+  let l:spacePos      = 0
+  let l:quoteRe       = '\\\@<!"'
+
+"  "call Decho("in replace spaces.  line=" . line('.'))
+  while (1)
+    let l:startQuotePos = match(l:line, l:quoteRe, l:startingPos)
+    if (l:startQuotePos < 0)
+"     call Decho("No more quotes to the end of line")
+     break
+    endif
+    let l:endQuotePos = match(l:line, l:quoteRe, l:startQuotePos + 1)
+    if (l:endQuotePos < 0)
+"     call Decho("Mismatched quotes")
+     break
+    endif
+    let l:spaceReplaceRe = '^.\{' . (l:startQuotePos + 1) . '}.\{-}\zs\s\ze.*.\{' . (linelen - l:endQuotePos) . '}$'
+"    call Decho('spaceReplaceRe="' . l:spaceReplaceRe . '"')
+    let l:newStr = substitute(l:line, l:spaceReplaceRe, '%', '')
+    while (l:newStr != l:line)
+"      call Decho('newstr="' . l:newStr . '"')
+      let l:line = l:newStr
+      let l:newStr = substitute(l:line, l:spaceReplaceRe, '%', '')
+    endwhile
+    let l:startingPos = l:endQuotePos + 1
+  endwhile
+  keepj call setline(line('.'), l:line)
+
+"  call Dret("Align#AlignReplaceQuotedSpaces")
+endfun
+
+" ---------------------------------------------------------------------
+" s:QArgSplitter: to avoid \ processing by <f-args>, <q-args> is needed. {{{1
