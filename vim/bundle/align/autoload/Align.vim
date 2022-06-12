@@ -854,3 +854,53 @@ fun! Align#AlignPush()
    let s:AlignVPat_{s:AlignCtrlStackQty}= s:AlignVPat
   else
    let s:AlignVPat_{s:AlignCtrlStackQty}=  ""
+  endif
+
+"  call Dret("Align#AlignPush")
+endfun
+
+" ---------------------------------------------------------------------
+" Align#AlignPop: this command/function pops an alignment pattern from a stack {{{1
+"           and into the AlignCtrl variables.
+fun! Align#AlignPop()
+"  call Dfunc("Align#AlignPop()")
+
+  " sanity checks
+  if !exists("s:AlignCtrlStackQty")
+   echoerr "(AlignPop) AlignPush needs to be used prior to AlignPop"
+"   call Dret("Align#AlignPop <> : AlignPush needs to have been called first")
+   return ""
+  endif
+  if s:AlignCtrlStackQty <= 0
+   unlet s:AlignCtrlStackQty
+   echoerr "(AlignPop) AlignPush needs to be used prior to AlignPop"
+"   call Dret("Align#AlignPop <> : AlignPop needs to have been called first")
+   return ""
+  endif
+
+  " pop top of AlignCtrlStack and pass value to AlignCtrl
+  let retval=s:AlignCtrlStack_{s:AlignCtrlStackQty}
+  unlet s:AlignCtrlStack_{s:AlignCtrlStackQty}
+  call Align#AlignCtrl(retval)
+
+  " pop G pattern stack
+  if s:AlignGPat_{s:AlignCtrlStackQty} != ""
+   call Align#AlignCtrl('g',s:AlignGPat_{s:AlignCtrlStackQty})
+  else
+   call Align#AlignCtrl('g')
+  endif
+  unlet s:AlignGPat_{s:AlignCtrlStackQty}
+
+  " pop V pattern stack
+  if s:AlignVPat_{s:AlignCtrlStackQty} != ""
+   call Align#AlignCtrl('v',s:AlignVPat_{s:AlignCtrlStackQty})
+  else
+   call Align#AlignCtrl('v')
+  endif
+
+  unlet s:AlignVPat_{s:AlignCtrlStackQty}
+  let s:AlignCtrlStackQty= s:AlignCtrlStackQty - 1
+
+"  call Dret("Align#AlignPop <".retval."> : AlignCtrlStackQty=".s:AlignCtrlStackQty)
+  return retval
+endfun
