@@ -947,3 +947,49 @@ endfun
 
 " ---------------------------------------------------------------------
 " s:QArgSplitter: to avoid \ processing by <f-args>, <q-args> is needed. {{{1
+" However, <q-args> doesn't split at all, so this function returns a list
+" of arguments which has been:
+"   * split at whitespace
+"   * unless inside "..."s.  One may escape characters with a backslash inside double quotes.
+" along with a leading length-of-list.
+"
+"   Examples:   %Align "\""   will align on "s
+"               %Align " "    will align on spaces
+"
+" The resulting list:  qarglist[0] corresponds to a:0
+"                      qarglist[i] corresponds to a:{i}
+fun! s:QArgSplitter(qarg)
+"  call Dfunc("s:QArgSplitter(qarg<".a:qarg.">)")
+
+  if a:qarg =~ '".*"'
+   " handle "..." args, which may include whitespace
+   let qarglist = []
+   let args     = a:qarg
+"   call Decho("handle quoted arguments: args<".args.">")
+   while args != ""
+	let iarg   = 0
+	let arglen = strlen(args)
+"	call Decho(".args[".iarg."]<".args[iarg]."> arglen=".arglen)
+	" find index to first not-escaped '"'
+"	call Decho("find index to first not-escaped \"")
+	while args[iarg] != '"' && iarg < arglen
+	 if args[iarg] == '\'
+	  let args= strpart(args,1)
+	 endif
+	 let iarg= iarg + 1
+	endwhile
+"	call Decho(".args<".args."> iarg=".iarg." arglen=".arglen)
+
+	if iarg > 0
+	 " handle left of quote or remaining section
+"	 call Decho(".handle left of quote or remaining section")
+	 if args[iarg] == '"'
+	  let qarglist= qarglist + split(strpart(args,0,iarg-1))
+	 else
+	  let qarglist= qarglist + split(strpart(args,0,iarg))
+	 endif
+	 let args    = strpart(args,iarg)
+	 let arglen  = strlen(args)
+
+	elseif iarg < arglen && args[0] == '"'
+	 " handle "quoted" section
