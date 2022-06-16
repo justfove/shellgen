@@ -993,3 +993,47 @@ fun! s:QArgSplitter(qarg)
 
 	elseif iarg < arglen && args[0] == '"'
 	 " handle "quoted" section
+"	 call Decho(".handle quoted section")
+	 let iarg= 1
+	 while args[iarg] != '"' && iarg < arglen
+	  if args[iarg] == '\'
+	   let args= strpart(args,1)
+	  endif
+	  let iarg= iarg + 1
+	 endwhile
+"	 call Decho(".args<".args."> iarg=".iarg." arglen=".arglen)
+	 if args[iarg] == '"'
+	  call add(qarglist,strpart(args,1,iarg-1))
+	  let args= strpart(args,iarg+1)
+	 else
+	  let qarglist = qarglist + split(args)
+	  let args     = ""
+	 endif
+	endif
+"	call Decho(".qarglist".string(qarglist)." iarg=".iarg." args<".args.">")
+   endwhile
+"   call Decho("end of loop (handling quoted arguments)")
+
+  else
+   " split at all whitespace
+"   call Decho("split at all whitespace")
+   let qarglist= split(a:qarg,"[ \t]")
+  endif
+
+  let qarglistlen= len(qarglist)
+  let qarglist   = insert(qarglist,qarglistlen)
+"  call Dret("s:QArgSplitter ".string(qarglist))
+  return qarglist
+endfun
+
+" ---------------------------------------------------------------------
+" s:Strlen: this function returns the length of a string, even if its {{{1
+"           using two-byte etc characters.
+"           Currently, its only used if g:Align_xstrlen is set to a
+"           nonzero value.  Solution from Nicolai Weibull, vim docs
+"           (:help strlen()), Tony Mechelynck, and my own invention.
+fun! s:Strlen(x)
+"  call Dfunc("s:Strlen(x<".a:x."> g:Align_xstrlen=".g:Align_xstrlen)
+
+  if type(g:Align_xstrlen) == 1
+   " allow user to specify a function to compute the string length
