@@ -1037,3 +1037,52 @@ fun! s:Strlen(x)
 
   if type(g:Align_xstrlen) == 1
    " allow user to specify a function to compute the string length
+   exe "let ret= ".g:Align_xstrlen."('".substitute(a:x,"'","''","g")."')"
+
+  elseif g:Align_xstrlen == 1
+   " number of codepoints (Latin a + combining circumflex is two codepoints)
+   " (comment from TM, solution from NW)
+   let ret= strlen(substitute(a:x,'.','c','g'))
+
+  elseif g:Align_xstrlen == 2
+   " number of spacing codepoints (Latin a + combining circumflex is one spacing
+   " codepoint; a hard tab is one; wide and narrow CJK are one each; etc.)
+   " (comment from TM, solution from TM)
+   let ret=strlen(substitute(a:x, '.\Z', 'x', 'g'))
+
+  elseif g:Align_xstrlen == 3
+   " virtual length (counting, for instance, tabs as anything between 1 and
+   " 'tabstop', wide CJK as 2 rather than 1, Arabic alif as zero when immediately
+   " preceded by lam, one otherwise, etc.)
+   " (comment from TM, solution from me)
+   let modkeep= &l:mod
+   exe "norm! o\<esc>"
+   call setline(line("."),a:x)
+   let ret= virtcol("$") - 1
+   d
+   let &l:mod= modkeep
+
+  else
+   " at least give a decent default
+   if v:version >= 703
+	let ret= strdisplaywidth(a:x)
+   else
+    let ret= strlen(a:x)
+   endif
+  endif
+"  call Dret("s:Strlen ".ret)
+  return ret
+endfun
+
+" ---------------------------------------------------------------------
+" s:SaveUserOptions: {{{1
+fun! s:SaveUserOptions()
+"  call Dfunc("s:SaveUserOptions() s:saved_user_options=".(exists("s:saved_user_options")? s:saved_user_options : 'n/a'))
+  if !exists("s:saved_user_options")
+   let s:saved_user_options = 1
+   let s:keep_search        = @/
+   let s:keep_et            = &l:et
+   let s:keep_hls           = &hls
+   let s:keep_ic            = &ic
+   let s:keep_paste         = &paste
+   let s:keep_report        = &report
