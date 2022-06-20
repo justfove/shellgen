@@ -1086,3 +1086,40 @@ fun! s:SaveUserOptions()
    let s:keep_ic            = &ic
    let s:keep_paste         = &paste
    let s:keep_report        = &report
+  else
+   let s:saved_user_options = s:saved_user_options + 1
+  endif
+"  call Dret("s:SaveUserOptions : s:saved_user_options=".s:saved_user_options)
+endfun
+
+" ---------------------------------------------------------------------
+" s:RestoreUserOptions: {{{1
+fun! s:RestoreUserOptions()
+"  call Dfunc("s:RestoreUserOptions() s:saved_user_options=".(exists("s:saved_user_options")? s:saved_user_options : 'n/a'))
+  if exists("s:saved_user_options") && s:saved_user_options == 1
+   let @/       = s:keep_search
+   let &l:et    = s:keep_et
+   let &hls     = s:keep_hls
+   let &ic      = s:keep_ic
+   let &paste   = s:keep_paste
+   let &report  = s:keep_report
+   unlet s:keep_search
+   unlet s:keep_et
+   unlet s:keep_hls
+   unlet s:keep_ic
+   unlet s:keep_paste
+   unlet s:keep_report
+   unlet s:saved_user_options
+  elseif exists("s:saved_user_options")
+   let s:saved_user_options= s:saved_user_options - 1
+  endif
+"  call Dret("s:RestoreUserOptions : s:saved_user_options=".(exists("s:saved_user_options")? s:saved_user_options : 'n/a'))
+endfun
+
+" ---------------------------------------------------------------------
+" Set up default values: {{{1
+"call Decho("-- Begin AlignCtrl Initialization --")
+call Align#AlignCtrl("default")
+"call Decho("-- End AlignCtrl Initialization --")
+
+" ---------------------------------------------------------------------
