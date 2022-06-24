@@ -1,0 +1,41 @@
+
+*align.txt*	The Alignment Tool			Jun 18, 2012
+
+Author:    Charles E. Campbell      <NdrOchip@ScampbellPfamily.AbizM>
+           (remove NOSPAM from Campbell's email first)
+Copyright: (c) 2004-2012 by Charles E. Campbell     	*Align-copyright*
+           The VIM LICENSE applies to Align.vim, AlignMaps.vim, and Align.txt
+           (see |copyright|) except use "Align and AlignMaps" instead of "Vim"
+           NO WARRANTY, EXPRESS OR IMPLIED.  USE AT-YOUR-OWN-RISK.
+
+==============================================================================
+1. Contents					*align* *align-contents* {{{1
+
+	1. Contents.................: |align-contents|
+	2. Alignment Manual.........: |align-manual|
+	3. Alignment Usage..........: |align-usage|
+	   Alignment Concepts.......: |align-concepts|
+	   Alignment Commands.......: |align-commands|
+	   Alignment Control........: |align-control|
+	     Separators.............: |alignctrl-separators|
+	     Initial Whitespace.....: |alignctrl-w| |alignctrl-W| |alignctrl-I|
+	     Justification..........: |alignctrl-l| |alignctrl-r| |alignctrl-c|
+	     Justification Control..: |alignctrl--| |alignctrl-+| |alignctrl-:|
+	     Cyclic/Sequential......: |alignctrl-=| |alignctrl-C|
+	     Separator Justification: |alignctrl-<| |alignctrl->| |alignctrl-||
+	     Line (de)Selection.....: |alignctrl-g| |alignctrl-v|
+	     Temporary Settings.....: |alignctrl-m|
+	     Padding................: |alignctrl-p| |alignctrl-P|
+	     Current Options........: |alignctrl-settings| |alignctrl-|
+	   Alignment Control Init...: |alignctrl-init|
+	   Alignment................: |align-align|
+	4. Alignment Maps...........: |align-maps|
+	     \a,....................: |alignmap-a,|
+	     \a?....................: |alignmap-a?|
+	     \a<....................: |alignmap-a<|
+	     \abox..................: |alignmap-abox|
+	     \acom..................: |alignmap-acom|
+	     \anum..................: |alignmap-anum|
+	     \ascom.................: |alignmap-ascom|
+	     \adec..................: |alignmap-adec|
+	     \adef..................: |alignmap-adef|

@@ -1123,3 +1123,7 @@ call Align#AlignCtrl("default")
 "call Decho("-- End AlignCtrl Initialization --")
 
 " ---------------------------------------------------------------------
+"  Restore: {{{1
+let &cpo= s:keepcpo
+unlet s:keepcpo
+" vim: ts=4 fdm=marker
