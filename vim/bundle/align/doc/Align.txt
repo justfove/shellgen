@@ -39,3 +39,69 @@ Copyright: (c) 2004-2012 by Charles E. Campbell     	*Align-copyright*
 	     \ascom.................: |alignmap-ascom|
 	     \adec..................: |alignmap-adec|
 	     \adef..................: |alignmap-adef|
+	     \afnc..................: |alignmap-afnc|
+	     \adcom.................: |alignmap-adcom|
+	     \aocom.................: |alignmap-aocom|
+	     \tsp...................: |alignmap-tsp|
+	     \tsq...................: |alignmap-tsq|
+	     \tt....................: |alignmap-tt|
+	     \t=....................: |alignmap-t=|
+	     \T=....................: |alignmap-T=|
+	     \Htd...................: |alignmap-Htd|
+	5. Alignment Tool History...: |align-history|
+
+==============================================================================
+2. Align Manual			*alignman* *alignmanual* *align-manual* {{{1
+
+	Align comes as a vimball; simply typing >
+		vim Align.vba.gz
+		:so %
+<	should put its components where they belong.  The components are: >
+		.vim/plugin/AlignPlugin.vim
+		.vim/plugin/AlignMapsPlugin.vim
+		.vim/plugin/cecutil.vim
+		.vim/autoload/Align.vim
+		.vim/autoload/AlignMaps.vim
+		.vim/doc/Align.txt
+<	To see a user's guide, see |align-userguide|
+	To see examples, see |alignctrl| and |alignmaps|
+>
+/=============+=========+=====================================================\
+||            \ Default/                                                     ||
+||  Commands   \ Value/                Explanation                           ||
+||              |    |                                                       ||
+++==============+====+=======================================================++
+||  AlignCtrl   |    |  =Clrc-+:pPIWw [..list-of-separator-patterns..]       ||
+||              |    +-------------------------------------------------------+|
+||              |    |  may be called as a command or as a function:         ||
+||              |    |  :AlignCtrl =lp0P0W & \\                              ||
+||              |    |  :call Align#AlignCtrl('=lp0P0W','&','\\')            ||
+||              |    |                                                       ||
+||              |    +-------------------------------------------------------++
+||   1st arg    |  = | =  all separator patterns are equivalent and are      ||
+||              |    |    simultaneously active. Patterns are |regexp|.      ||
+||              |    | C  cycle through separator patterns.  Patterns are    ||
+||              |    |    |regexp| and are active sequentially.              ||
+||              |    |                                                       ||
+||              |  < | <  left justify separator   Separators are justified, ||
+||              |    | >  right justify separator  too.  Separator styles    ||
+||              |    | |  center separator         are cyclic.               ||
+||              |    |                                                       ||
+||              |  l | l  left justify   Justification styles are always     ||
+||              |    | r  right justify  cyclic (ie. lrc would mean left j., ||
+||              |    | c  center         then right j., then center, repeat. ||
+||              |    | -  skip this separator                                ||
+||              |    | +  re-use last justification method                   ||
+||              |    | :  treat rest of text as a field                      ||
+||              |    | *  use AlignSkip() function (to skip or not)          ||
+||              |    |                                                       ||
+||              | p1 | p### pad separator on left  by # blanks               ||
+||              | P1 | P### pad separator on right by # blanks               ||
+||              |    |                                                       ||
+||              |  I | I  preserve and apply first line's leading white      ||
+||              |    |    space to all lines                                 ||
+||              |    | W  preserve leading white space on every line, even   ||
+||              |    |    if it varies from line to line                     ||
+||              |    | w  don't preserve leading white space                 ||
+||              |    |                                                       ||
+||              |    | g  second argument is a selection pattern -- only     ||
