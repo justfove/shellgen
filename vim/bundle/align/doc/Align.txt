@@ -105,3 +105,44 @@ Copyright: (c) 2004-2012 by Charles E. Campbell     	*Align-copyright*
 ||              |    | w  don't preserve leading white space                 ||
 ||              |    |                                                       ||
 ||              |    | g  second argument is a selection pattern -- only     ||
+||              |    |    align on lines that have a match  (inspired by     ||
+||              |    |    :g/selection pattern/command)                      ||
+||              |    | v  second argument is a selection pattern -- only     ||
+||              |    |    align on lines that _don't_ have a match (inspired ||
+||              |    |    by :v/selection pattern/command)                   ||
+||              |    |                                                       ||
+||              |    | m  Map support: AlignCtrl will immediately do an      ||
+||              |    |    AlignPush() and the next call to Align() will do   ||
+||              |    |    an AlignPop at the end.  This feature allows maps  ||
+||              |    |    to preserve user settings.                         ||
+||              |    |                                                       ||
+||              |    | default                                               ||
+||              |    |    AlignCtrl default                                  ||
+||              |    |    will clear the AlignCtrl                           ||
+||              |    |    stack & set the default:  AlignCtrl "Ilp1P1=" '='  ||
+||              |    |                                                       ||
+||              +----+-------------------------------------------------------+|
+||  More args   |  More arguments are interpreted as describing separators   ||
+||              +------------------------------------------------------------+|
+||   No args    |  AlignCtrl will display its current settings               ||
+||==============+============================================================+|
+||[range]Align  |   [..list-of-separators..]                                 ||
+||[range]Align! |   [AlignCtrl settings] [..list-of-separators..]            ||
+||              +------------------------------------------------------------+|
+||              |  Aligns text over the given range.  The range may be       ||
+||              |  selected via visual mode (v, V, or ctrl-v) or via         ||
+||              |  the command line.  The Align operation may be invoked     ||
+||              |  as a command or as a function; as a function, the first   ||
+||              |  argument is 0=separators only, 1=AlignCtrl option string  ||
+||              |  followed by a list of separators.                         ||
+||              |   :[range]Align                                            ||
+||              |   :[range]Align [list of separators]                       ||
+||              |   :[range]call Align#Align(0)                              ||
+||              |   :[range]call Align#Align(0,"list","of","separators",...) ||
+\=============================================================================/
+
+==============================================================================
+3. Alignment Usage	*alignusage* *align-usage* *align-userguide* {{{1
+
+
+ALIGNMENT CONCEPTS			*align-concept* *align-concepts* {{{2
