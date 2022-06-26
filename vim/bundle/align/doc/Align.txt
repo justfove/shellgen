@@ -195,3 +195,39 @@ ALIGNMENT CONCEPTS			*align-concept* *align-concepts* {{{2
 		  a =   b =   c = 3;
 <	There are many more options available for field justification: see
 	|alignctrl-c| and |alignctrl--|.
+
+	Separators, although commonly only one character long, are actually
+	specified by regular expressions (see |regexp|), and one may left
+	justify, right justify, or center them, too (see |alignctrl-<|).
+
+	Assume that for some reason a left-right-left-right-... justification
+	sequence was desired.  This wish is simply achieved with >
+		:AlignCtrl lr
+		:1,4Align =
+<	because the justification commands are considered to be "cyclic"; ie.
+	lr is the same as lrlrlrlrlrlrlr...
+
+	There's a lot more discussed under |alignctrl|; hopefully the examples
+	there will help, too.
+
+
+ALIGNMENT COMMANDS			*align-command* *align-commands* {{{2
+
+        The <Align.vim> script includes two primary commands and two
+	minor commands:
+
+	  AlignCtrl : this command/function sets up alignment options
+	              which persist until changed for later Align calls.
+		      It controls such things as: how to specify field
+		      separators, initial white space, padding about
+		      separators, left/right/center justification, etc. >
+			ex.  AlignCtrl wp0P1
+                             Interpretation: during subsequent alignment
+			     operations, preserve each line's initial
+			     whitespace.  Use no padding before separators
+			     but provide one padding space after separators.
+<
+	  Align     : this command/function operates on the range given it to
+		      align text based on one or more separator patterns.  The
+		      patterns may be provided via AlignCtrl or via Align
+		      itself. >
