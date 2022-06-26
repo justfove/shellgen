@@ -146,3 +146,52 @@ Copyright: (c) 2004-2012 by Charles E. Campbell     	*Align-copyright*
 
 
 ALIGNMENT CONCEPTS			*align-concept* *align-concepts* {{{2
+
+	The typical text to be aligned is considered to be:
+
+		* composed of two or more fields
+		* separated by one or more separator pattern(s):
+		* two or more lines
+>
+		ws field ws separator ws field ws separator ...
+		ws field ws separator ws field ws separator ...
+<
+	where "ws" stands for "white space" such as blanks and/or tabs,
+	and "fields" are arbitrary text.  For example, consider >
+
+		x= y= z= 3;
+		xx= yy= zz= 4;
+		zzz= yyy= zzz= 5;
+		a= b= c= 3;
+<
+	Assume that it is desired to line up all the "=" signs; these,
+	then, are the separators.  The fields are composed of all the
+	alphameric text.  Assuming they lie on lines 1-4, one may align
+	those "=" signs with: >
+		:AlignCtrl l
+		:1,4Align =
+<	The result is: >
+		x   = y   = z   = 3;
+		xx  = yy  = zz  = 4;
+		zzz = yyy = zzz = 5;
+		a   = b   = c   = 3;
+
+<	Note how each "=" sign is surrounded by a single space; the
+	default padding is p1P1 (p1 means one space before the separator,
+	and P1 means one space after it).  If you wish to change the
+	padding, say, to no padding, use  (see |alignctrl-p|) >
+
+		:AlignCtrl lp0P0
+
+<	Next, note how each field is left justified; that's what the "l"
+	in the AlignCtrl parameters (a small letter "ell") does.  If
+	right-justification of the fields had been desired, an "r"
+	could've been used: >
+		:AlignCtrl r
+<	yielding >
+		  x =   y =   z = 3;
+		 xx =  yy =  zz = 4;
+		zzz = yyy = zzz = 5;
+		  a =   b =   c = 3;
+<	There are many more options available for field justification: see
+	|alignctrl-c| and |alignctrl--|.
