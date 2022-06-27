@@ -231,3 +231,64 @@ ALIGNMENT COMMANDS			*align-command* *align-commands* {{{2
 		      align text based on one or more separator patterns.  The
 		      patterns may be provided via AlignCtrl or via Align
 		      itself. >
+
+			ex. :%Align ,
+			    Interpretation: align all commas over the entire
+			    file.
+<		      The :Align! format permits alignment control commands
+		      to precede the alignment patterns. >
+			ex. :%Align! p2P2 =
+<		      This will align all "=" in the file with two padding
+		      spaces on both sides of each "=" sign.
+
+		      NOTE ON USING PATTERNS WITH ALIGN:~
+		      Align and AlignCtrl use |<q-args>| to obtain their
+		      input patterns and they use an internal function to
+		      split arguments at whitespace unless inside "..."s.
+		      One may escape characters inside a double-quote string
+		      by preceding such characters with a backslash.
+
+	  AlignPush : this command/function pushes the current AlignCtrl
+	              state onto an internal stack. >
+			ex. :AlignPush
+			    Interpretation: save the current AlignCtrl
+			    settings, whatever they may be.  They'll
+			    also remain as the current settings until
+			    AlignCtrl is used to change them.
+<
+	  AlignPop  : this command/function pops the current AlignCtrl
+	              state from an internal stack. >
+			ex. :AlignPop
+			    Interpretation: presumably AlignPush was
+			    used (at least once) previously; this command
+			    restores the AlignCtrl settings when AlignPush
+			    was last used.
+<	              Also see |alignctrl-m| for a way to automatically do
+	              an AlignPop after an Align (primarily this is for maps).
+
+ALIGNMENT OPTIONS	*align-option* *align-options* *align-xstrlen* {{{2
+    *align-utf8* *align-utf* *align-codepoint* *align-strlen* *align-multibyte*
+
+	For those of you who are using 2-byte (or more) characters such as are
+	available with utf-8, Align now provides a special option which you
+	may choose based upon your needs:
+
+	Use Built-in strlen() ~
+>
+			let g:Align_xstrlen= 0
+
+<       This is the fastest method, but it doesn't handle multibyte characters
+	well.  It is the default for:
+
+	  enc=latin1
+	  vim compiled without multi-byte support
+	  $LANG is en_US.UTF-8 (assuming USA english)
+
+	Number of codepoints (Latin a + combining circumflex are two codepoints)~
+>
+			let g:Align_xstrlen= 1              (default)
+<
+	Number of spacing codepoints (Latin a + combining circumflex is one~
+	spacing codepoint; a hard tab is one; wide and narrow CJK are one~
+	each; etc.)~
+>
