@@ -292,3 +292,59 @@ ALIGNMENT OPTIONS	*align-option* *align-options* *align-xstrlen* {{{2
 	spacing codepoint; a hard tab is one; wide and narrow CJK are one~
 	each; etc.)~
 >
+			let g:Align_xstrlen= 2
+<
+	Virtual length (counting, for instance, tabs as anything between 1 and~
+	'tabstop', wide CJK as 2 rather than 1, Arabic alif as zero when~
+	immediately preceded by lam, one otherwise, etc.)~
+>
+			let g:Align_xstrlen= 3
+<
+	User may specify a function to compute the string length~
+>
+			let g:Align_xstrlen= "strlen"
+<	This method will cause Align to call upon the named function returning
+	string length. it should resemble the |strlen()| function, taking one
+	argument (the string) for input and returning the string length.
+
+	By putting one of these settings into your <.vimrc>, Align will use an
+	internal (interpreted) function to determine a string's length instead
+	of Vim's built-in |strlen()| function.  Since the function is
+	interpreted, Align will run a bit slower but will handle such strings
+	correctly.  The last settings (g:Align_xstrlen= 3 and
+	g:Align_xstrlen="userfuncname") probably will run the slowest but be
+	the most accurate.  (thanks to Tony Mechelynck for these)
+
+
+ALIGNMENT CONTROL				*alignctrl* *align-control* {{{2
+
+	This command doesn't do the alignment operation itself; instead, it
+	controls subsequent alignment operation(s).
+
+	The first argument to AlignCtrl is a string which may contain one or
+	more alignment control settings.  Most of the settings are specified
+	by single letters; the exceptions are the p# and P# commands which
+	interpret a digit following the p or P as specifying padding about the
+	separator.
+
+	The typical text line is considered to be composed of two or more
+	fields separated by one or more separator pattern(s): >
+
+		ws field ws separator ws field ws separator ...
+<
+	where "ws" stands for "white space" such as blanks and/or tabs.
+
+
+	SEPARATORS				*alignctrl-separators* {{{3
+
+	As a result, separators may not have white space (tabs or blanks) on
+	their outsides (ie.  ":  :" is fine as a separator, but " :: " is
+	not).  Usually such separators are not needed, although a map has been
+	provided which works around this limitation and aligns on whitespace
+	(see |alignmap-tsp|).
+
+	However, if you really need to have separators with leading or
+	trailing whitespace, consider handling them by performing a substitute
+	first (ie. s/  ::  /@/g), do the alignment on the temporary pattern
+	(ie. @), and then perform a substitute to revert the separators back
+	to their desired condition (ie. s/@/  ::  /g).
