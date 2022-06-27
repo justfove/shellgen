@@ -348,3 +348,49 @@ ALIGNMENT CONTROL				*alignctrl* *align-control* {{{2
 	first (ie. s/  ::  /@/g), do the alignment on the temporary pattern
 	(ie. @), and then perform a substitute to revert the separators back
 	to their desired condition (ie. s/@/  ::  /g).
+
+	The Align#Align() function (which is invoked by the :Align command)
+	will first convert tabs over the region into spaces and then apply
+	alignment control.  Except for initial white space, white space
+	surrounding the fields is ignored.  One has three options just for
+	handling initial white space:
+
+
+	--- 						*alignctrl-w*
+	wWI 	INITIAL WHITE SPACE			*alignctrl-W* {{{3
+	--- 						*alignctrl-I*
+		w : ignore all selected lines' initial white space
+		W : retain all selected lines' initial white space
+		I : retain only the first line's initial white space and
+		    re-use it for subsequent lines
+
+	Example: Leading white space options: >
+                         +---------------+-------------------+-----------------+
+	                 |AlignCtrl w= :=|  AlignCtrl W= :=  | AlignCtrl I= := |
+      +------------------+---------------+-------------------+-----------------+
+      |     Original     |   w option    |     W option      |     I option    |
+      +------------------+---------------+-------------------+-----------------+
+      |   a := baaa      |a     := baaa  |   a      := baaa  |   a     := baaa |
+      | caaaa := deeee   |caaaa := deeee | caaaa    := deeee |   caaaa := deeee|
+      |       ee := f    |ee    := f     |       ee := f     |   ee    := f    |
+      +------------------+---------------+-------------------+-----------------+
+<
+	The original has at least one leading white space on every line.
+	Using Align with w eliminated each line's leading white space.
+	Using Align with W preserved  each line's leading white space.
+	Using Align with I applied the first line's leading white space
+	                   (three spaces) to each line.
+
+
+	------						*alignctrl-l*
+	lrc-+:	FIELD JUSTIFICATION			*alignctrl-r* {{{3
+	------						*alignctrl-c*
+
+	With "lrc", the fields will be left-justified, right-justified, or
+	centered as indicated by the justification specifiers (lrc).  The
+	"lrc" options are re-used by cycling through them as needed:
+
+		l   means llllll....
+		r   means rrrrrr....
+		lr  means lrlrlr....
+		llr means llrllr....
