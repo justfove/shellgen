@@ -394,3 +394,48 @@ ALIGNMENT CONTROL				*alignctrl* *align-control* {{{2
 		r   means rrrrrr....
 		lr  means lrlrlr....
 		llr means llrllr....
+
+     Example: Justification options: Align = >
+     +------------+-------------------+-------------------+-------------------+
+     |  Original  |  AlignCtrl l      | AlignCtrl r       | AlignCtrl lr      |
+     +------------+-------------------+-------------------+-------------------+
+     | a=bb=ccc=1 |a   = bb  = ccc = 1|  a =  bb = ccc = 1|a   =  bb = ccc = 1|
+     | ccc=a=bb=2 |ccc = a   = bb  = 2|ccc =   a =  bb = 2|ccc =   a = bb  = 2|
+     | dd=eee=f=3 |dd  = eee = f   = 3| dd = eee =   f = 3|dd  = eee = f   = 3|
+     +------------+-------------------+-------------------+-------------------+
+     | Alignment  |l     l     l     l|  r     r     r   r|l       r   l     r|
+     +------------+-------------------+-------------------+-------------------+
+<
+		AlignCtrl l : The = separator is repeatedly re-used, as the
+			      cycle only consists of one character (the "l").
+			      Every time left-justification is used for fields.
+		AlignCtrl r : The = separator is repeatedly re-used, as the
+			      cycle only consists of one character (the "r").
+			      Every time right-justification is used for fields
+		AlignCtrl lr: Again, the "=" separator is repeatedly re-used,
+			      but the fields are justified alternately between
+			      left and right.
+
+	Even more separator control is available!  With "-+:":
+
+	    - : skip treating the separator as a separator.    *alignctrl--*
+	    + : repeat use of the last "lrc" justification     *alignctrl-+*
+	    : : treat the rest of the line as a single field   *alignctrl-:*
+	    * : like -, but only if g:AlignSkip() returns true *alignctrl-star*
+	        (see |alignctrl-alignskip|)
+
+     Example: More justification options:  Align = >
+     +------------+---------------+--------------------+---------------+
+     |  Original  |  AlignCtrl -l | AlignCtrl rl+      | AlignCtrl l:  |
+     +------------+---------------+--------------------+---------------+
+     | a=bb=ccc=1 |a=bb   = ccc=1 |  a = bb  = ccc = 1 |a   = bb=ccc=1 |
+     | ccc=a=bb=2 |ccc=a  = bb=2  |ccc = a   = bb  = 2 |ccc = a=bb=2   |
+     | dd=eee=f=3 |dd=eee = f=3   | dd = eee = f   = 3 |dd  = eee=f=3  |
+     +------------+---------------+--------------------+---------------+
+     | Alignment  |l        l     |  r   l     l     l |l     l        |
+     +------------+---------------+--------------------+---------------+
+<
+	In the first example in "More justification options":
+
+	  The first "=" separator is skipped by the "-" specification,
+	  and so "a=bb", "ccc=a", and "dd=eee" are considered as single fields.
