@@ -477,3 +477,49 @@ ALIGNMENT CONTROL				*alignctrl* *align-control* {{{2
 	1. Define a function; example: >
 
 	    fun! AlignSkipString(lineno,indx)
+	      let synid   = synID(a:lineno,a:indx+1,1)
+	      let synname = synIDattr(synIDtrans(synid),"name")
+	      let ret= (synname == "String")? 1 : 0
+	      return ret
+	    endfun
+<
+	  Input: lineno: current line number
+	         indx  : index to character; leftmost character
+		         in the line has an indx of 0 (like |strpart()|)
+	  Output: 0    : if separator is ok
+	          1    : skip separator like it was a '-'
+
+	2. Set up |g:AlignSkip| as a function reference (see |Funcref|): >
+
+	   let g:AlignSkip= function("AlignSkipString")
+<
+	3. Use * as a separator control where a separator potentially should
+	   be skipped over.
+
+
+	---						     *alignctrl-=*
+	=C	CYCLIC VS ALL-ACTIVE SEPARATORS		     *alignctrl-C* {{{3
+	---
+
+	The separators themselves may be considered as equivalent and
+	simultaneously active ("=") or sequentially cycled through ("C").
+	Separators are regular expressions (|regexp|) and are specified as the
+	second, third, etc arguments.  When the separator patterns are
+	equivalent and simultaneously active, there will be one pattern
+	constructed: >
+
+		AlignCtrl ... pat1 pat2 pat3
+<	becomes >
+		\(pat1\|pat2\|pat3\)
+<	(ie. pat1 -or- pat2 -or- pat3; see |/bar|)
+
+	Each separator pattern is thus equivalent and simultaneously active.
+	The cyclic separator AlignCtrl option stores a list of patterns, only
+	one of which is active for each field at a time.
+
+	Example: Equivalent/Simultaneously-Active vs Cyclic Separators >
+ +-------------+------------------+---------------------+----------------------+
+ |   Original  | AlignCtrl = = + -| AlignCtrl = =       | AlignCtrl C = + -    |
+ +-------------+------------------+---------------------+----------------------+
+ |a = b + c - d|a = b + c - d     |a = b + c - d        |a = b         + c - d |
+ |x = y = z + 2|x = y = z + 2     |x = y         = z + 2|x = y = z     + 2     |
