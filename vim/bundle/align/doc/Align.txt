@@ -439,3 +439,41 @@ ALIGNMENT CONTROL				*alignctrl* *align-control* {{{2
 
 	  The first "=" separator is skipped by the "-" specification,
 	  and so "a=bb", "ccc=a", and "dd=eee" are considered as single fields.
+
+	  The next "=" separator has its (left side) field left-justified.
+	  Due to the cyclic nature of separator patterns, the "-l"
+	  specification is equivalent to "-l-l-l ...".
+
+	  Hence the next specification is a "skip", so "ccc=1", etc are fields.
+
+	In the second example in "More justification options":
+
+	  The first field is right-justified, the second field is left
+	  justified, and all remaining fields repeat the last justification
+	  command (ie. they are left justified, too).
+
+	  Hence rl+ is equivalent to         rlllllllll ...
+	  (whereas plain rl is equivalent to rlrlrlrlrl ... ).
+
+	In the third example in "More justification options":
+
+	  The text following the first separator is treated as a single field.
+
+	Thus using the - and : operators one can apply justification to a
+	single separator.
+
+	ex. 1st separator only:    AlignCtrl l:
+	    2nd separator only:    AlignCtrl -l:
+	    3rd separator only:    AlignCtrl --l:
+	    etc.
+
+							*g:AlignSkip*
+        Align Skip Control				*alignctrl-alignskip*
+
+	The separator control '*' permits a function to decide whether or
+	not a character which matches the current separator pattern should
+	instead be skipped.
+
+	1. Define a function; example: >
+
+	    fun! AlignSkipString(lineno,indx)
