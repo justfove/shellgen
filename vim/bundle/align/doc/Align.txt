@@ -620,3 +620,59 @@ ALIGNMENT CONTROL				*alignctrl* *align-control* {{{2
 	+---------------------+---------------------+---------------------+
 	| a   -   bbb -   c   | a     - bbb   - c   | a    -  bbb  -  c   |
 	| aa  --  bb  --  ccc | aa   -- bb   -- ccc | aa  --  bb  --  ccc |
+	| aaa --- b   --- cc  | aaa --- b   --- cc  | aaa --- b   --- cc  |
+	+---------------------+---------------------+---------------------+
+<
+
+	---						*alignctrl-g*
+	gv	SELECTIVE APPLICATION			*alignctrl-v* {{{3
+	---
+
+
+	These two options provide a way to select (g) or to deselect (v) lines
+	based on a pattern.  Ideally :g/pat/Align  would work; unfortunately
+	it results in Align#Align() being called on each line satisfying the
+	pattern separately. >
+
+		AlignCtrl g pattern
+<
+	Align will only consider those lines which have the given pattern. >
+
+		AlignCtrl v pattern
+<
+	Align will only consider those lines without the given pattern.  As an
+	example of use, consider the following example: >
+
+				           :AlignCtrl v ^\s*/\*
+	  Original          :Align =       :Align =
+	+----------------+------------------+----------------+
+	|one= 2;         |one     = 2;      |one   = 2;      |
+	|three= 4;       |three   = 4;      |three = 4;      |
+	|/* skip=this */ |/* skip = this */ |/* skip=this */ |
+	|five= 6;        |five    = 6;      |five  = 6;      |
+	+----------------+------------------+----------------+
+<
+	The first "Align =" aligned with all "="s, including the one in the
+	"/* skip=this */" comment.
+
+	The second "Align =" had a AlignCtrl v-pattern which caused it to skip
+	(ignore) the "/* skip=this */" line when aligning.
+
+	To remove AlignCtrl's g and v patterns, use (as appropriate) >
+
+		AlignCtrl g
+		AlignCtrl v
+<
+	To see what g/v patterns are currently active, just use the reporting
+	capability of an unadorned call to AlignCtrl: >
+
+		AlignCtrl
+<
+
+	---
+	 m	MAP SUPPORT				*alignctrl-m* {{{3
+	---
+
+	This option primarily supports the development of maps.  The
+	Align#AlignCtrl() call will first do an Align#AlignPush() (ie. retain
+	current alignment control settings).  The next Align#Align() will, in
