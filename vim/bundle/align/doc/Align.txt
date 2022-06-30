@@ -523,3 +523,58 @@ ALIGNMENT CONTROL				*alignctrl* *align-control* {{{2
  +-------------+------------------+---------------------+----------------------+
  |a = b + c - d|a = b + c - d     |a = b + c - d        |a = b         + c - d |
  |x = y = z + 2|x = y = z + 2     |x = y         = z + 2|x = y = z     + 2     |
+ |w = s - t = 0|w = s - t = 0     |w = s - t     = 0    |w = s - t = 0         |
+ +-------------+------------------+---------------------+----------------------+
+<
+	The original is initially aligned with all operators (=+-) being
+	considered as equivalent and simultaneously active field separators.
+	Thus the "AlignCtrl = = + -" example shows no change.
+
+	The second example only accepts the '=' as a field separator;
+	consequently "b + c - d" is now a single field.
+
+	The third example illustrates cyclic field separators and is analyzed
+	in the following illustration: >
+
+	field1 separator field2    separator field3 separator field4
+	   a      =      b             +       c        -       d
+	   x      =      y = z         +       2
+	   w      =      s - t = 0
+<
+	The word "cyclic" is used because the patterns form a cycle of use; in
+	the above case, its = + - = + - = + - = + -...
+
+	Example: Cyclic separators >
+		Label : this is some text discussing ":"s | ex. abc:def:ghi
+		Label : this is some text with a ":" in it | ex. abc:def
+<
+	  apply AlignCtrl lWC : | |
+	        (select lines)Align >
+                Label : this is some text discussing ":"s  | ex. abc:def:ghi
+                Label : this is some text with a ":" in it | ex. abcd:efg
+<
+	In the current example,
+	  : is the first separator        So the first ":"s are aligned
+	  | is the second separator       but subsequent ":"s are not.
+	  | is the third separator        The "|"s are aligned, too.
+	  : is the fourth separator       Since there aren't two bars,
+	  | is the fifth separator        the subsequent potential cycles
+	  | is the sixth separator        don't appear.
+	 ...
+
+	In this case it would probably have been a better idea to have used >
+		AlignCtrl WCl: : |
+<	as that alignment control would guarantee that no more cycling
+	would be used after the vertical bar.
+
+	Example: Cyclic separators
+
+	    Original: >
+		a| b&c | (d|e) & f-g-h
+		aa| bb&cc | (dd|ee) & ff-gg-hh
+		aaa| bbb&ccc | (ddd|eee) & fff-ggg-hhh
+<
+	    AlignCtrl C | | & - >
+		a   | b&c     | (d|e)     & f   - g-h
+		aa  | bb&cc   | (dd|ee)   & ff  - gg-hh
+		aaa | bbb&ccc | (ddd|eee) & fff - ggg-hhh
