@@ -578,3 +578,45 @@ ALIGNMENT CONTROL				*alignctrl* *align-control* {{{2
 		a   | b&c     | (d|e)     & f   - g-h
 		aa  | bb&cc   | (dd|ee)   & ff  - gg-hh
 		aaa | bbb&ccc | (ddd|eee) & fff - ggg-hhh
+<
+	In this example,
+	the first and second separators are "|",
+	the third            separator  is  "&", and
+	the fourth           separator  is  "-",
+
+	(cycling)
+	the fifth and sixth  separators are "|",
+	the seventh          separator  is  "&", and
+	the eighth           separator  is  "-", etc.
+
+	Thus the first "&"s are (not yet) separators, and hence are treated as
+	part of the field.  Ignoring white space for the moment, the AlignCtrl
+	shown here means that Align will work with >
+
+	field | field | field & field - field | field | field & field - ...
+<
+
+	---						*alignctrl-<*
+	<>|	SEPARATOR JUSTIFICATION			*alignctrl->* {{{3
+	---						*alignctrl-|*
+
+	Separators may be of differing lengths as shown in the example below.
+	Hence they too may be justified left, right, or centered.
+	Furthermore, separator justification specifications are cyclic:
+
+		<  means <<<<<...    justify separator(s) to the left
+		>  means >>>>>...    justify separator(s) to the right
+		|  means |||||...    center separator(s)
+
+	Example: Separator Justification: Align -\+ >
+				+-----------------+
+				|    Original     |
+				+-----------------+
+				| a - bbb - c     |
+				| aa -- bb -- ccc |
+				| aaa --- b --- cc|
+	+---------------------+-+-----------------+-+---------------------+
+	|     AlignCtrl <     |     AlignCtrl >     |     AlignCtrl |     |
+	+---------------------+---------------------+---------------------+
+	| a   -   bbb -   c   | a     - bbb   - c   | a    -  bbb  -  c   |
+	| aa  --  bb  --  ccc | aa   -- bb   -- ccc | aa  --  bb  --  ccc |
