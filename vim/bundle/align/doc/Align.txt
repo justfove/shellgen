@@ -676,3 +676,46 @@ ALIGNMENT CONTROL				*alignctrl* *align-control* {{{2
 	This option primarily supports the development of maps.  The
 	Align#AlignCtrl() call will first do an Align#AlignPush() (ie. retain
 	current alignment control settings).  The next Align#Align() will, in
+	addition to its alignment job, finish up with an Align#AlignPop().
+	Thus the Align#AlignCtrl settings that follow the "m" are only
+	temporarily in effect for just the next Align#Align().
+
+
+	---
+	p###						*alignctrl-p*
+	P###	PADDING					*alignctrl-P* {{{3
+	---
+
+	These two options control pre-padding and post-padding with blanks
+	about the separator.  One may pad separators with zero to nine spaces;
+	the padding number(s) is/are treated as a cyclic parameter.  Thus one
+	may specify padding separately for each field or re-use a padding
+	pattern. >
+
+	Example:          AlignCtrl p102P0
+	+---------+----------------------------------+
+	| Original| a=b=c=d=e=f=g=h=1                |
+        | Align = | a =b=c  =d =e=f  =g =h=1         |
+        +---------+----------------------------------+
+	| prepad  |   1 0   2  1 0   2  1 0          |
+        +---------+----------------------------------+
+<
+	This example will cause Align to:
+
+		pre-pad the first  "=" with a single blank,
+		pre-pad the second "=" with no blanks,
+		pre-pad the third  "=" with two blanks,
+		pre-pad the fourth "=" with a single blank,
+		pre-pad the fifth  "=" with no blanks,
+		pre-pad the sixth  "=" with two blanks,
+	        etc.
+
+	---------------				*alignctrl-settings*
+	No option given		DISPLAY STATUS	*alignctrl-*		{{{3
+	---------------				*alignctrl-no-option*
+
+	AlignCtrl, when called with no arguments, will display the current
+	alignment control settings.  A typical display is shown below: >
+
+		AlignCtrl<=> qty=1 AlignStyle<l> Padding<1|1>
+		Pat1<\(=\)>
