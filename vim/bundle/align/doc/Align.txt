@@ -751,3 +751,41 @@ ALIGNMENT CONTROL INITIALIZATION	*alignctrl-init* *alignctrl-initialization* {{{
 	put it in a file such as: >
 
 		$HOME/.vim/after/plugin/AlignPlugin.vim
+
+<	Anything in that file would be sourced at startup, but after your
+	.vimrc and after $HOME/.vim/plugin/AlignPlugin.vim; hence, :Align
+	and :AlignCtrl will then be defined.
+
+
+ALIGNMENT						*align-align* {{{2
+
+	Once the alignment control has been determined, the user specifies a
+	range of lines for the Align command/function to do its thing.
+	Alignment is often done on a line-range basis, but one may also
+	restrict alignment to a visual block using ctrl-v.  For any visual
+	mode, one types the colon (:) and then "Align".  One may, of course,
+	specify a range of lines: >
+
+		:[range]Align [list-of-separators]
+<
+	where the |:range| is the usual Vim-powered set of possibilities; the
+	list of separators is the same as the AlignCtrl capability.  There is
+	only one list of separators, but either AlignCtrl or Align can be used
+	to specify that list.
+
+	An alternative form of the Align command can handle both alignment
+	control and the separator list: >
+
+		:[range]Align! [alignment-control-string] [list-of-separators]
+<
+	The alignment control string will be applied only for this particular
+	application of Align (it uses |alignctrl-m|).  The "g pattern" and
+	"v pattern" alignment controls (see |alignctrl-g| and |alignctrl-v|)
+	are also available via this form of the Align command.
+
+	Align makes two passes over the text to be aligned.  The first pass
+	determines how many fields there are and determines the maximum sizes
+	of each field; these sizes are then stored in a vector.  The second
+	pass pads the field (left/right/centered as specified) to bring its
+	length up to the maximum size of the field.  Then the separator and
+	its AlignCtrl-specified padding is appended.
