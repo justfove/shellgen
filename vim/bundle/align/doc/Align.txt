@@ -789,3 +789,41 @@ ALIGNMENT						*align-align* {{{2
 	pass pads the field (left/right/centered as specified) to bring its
 	length up to the maximum size of the field.  Then the separator and
 	its AlignCtrl-specified padding is appended.
+
+		Pseudo-Code:~
+		 During pass 1
+		 | For all fields in the current line
+		 || Determine current separator
+		 || Examine field specified by current separator
+		 || Determine length of field and save if largest thus far
+		 Initialize newline based on initial whitespace option (wWI)
+		 During pass 2
+		 | For all fields in current line
+		 || Determine current separator
+		 || Extract field specified by current separator
+		 || Prepend/append padding as specified by AlignCtrl
+		 || (right/left/center)-justify to fit field into max-size field
+		 || Append separator with AlignCtrl-specified separator padding
+		 || Delete current line, install newly aligned line
+
+	The g and v AlignCtrl patterns cause the passes not to consider lines
+	for alignment, either by requiring that the g-pattern be present or
+	that the v-pattern not be present.
+
+	The whitespace on either side of a separator is ignored.
+
+
+==============================================================================
+4. Alignment Maps				*alignmaps* *align-maps* {{{1
+
+	There are a number of maps provided in the AlignMaps plugin which
+	depend upon the Align plugin.  The maps provided by AlignMaps
+	typically start with a leading "t" (for the older "textab" program
+	which Align supercedes) or with an "a" for the more complicated
+	alignment maps.
+
+	The AlignMaps plugin, although provided in the vimball containing
+	Align.vim, is really a separate plugin (Align doesn't depend on
+	AlignMaps).  Consequently, if you'd rather not have AlignMaps's
+	mappings, just use the *:AlignMapsClean* command to remove its
+	components.  The :AlignMapsClean command does not remove any maps
