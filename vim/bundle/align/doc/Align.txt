@@ -719,3 +719,35 @@ ALIGNMENT CONTROL				*alignctrl* *align-control* {{{2
 
 		AlignCtrl<=> qty=1 AlignStyle<l> Padding<1|1>
 		Pat1<\(=\)>
+<
+	Interpreting, this means that the separator patterns are all
+	equivalent; in this case, there's only one (qty=1).  Fields will be
+	padded on the right with spaces (left justification), and separators
+	will be padded on each side with a single space.
+
+	To change one of these items, see:
+
+	  AlignCtrl......|alignctrl|
+	  qty............|align-concept|
+	  AlignStyle.....|alignctrl--| |alignctrl-+| |alignctrl-:| |alignctrl-c|
+	  Padding........|alignctrl-p| |alignctrl-P|
+
+	One may get a string which can be fed back into AlignCtrl: >
+
+		:let alignctrl= Align#AlignCtrl()
+<
+	This form will put a string describing the current AlignCtrl options,
+	except for the "g" and "v" patterns, into a variable.  The
+	Align#AlignCtrl() function will still echo its settings, however.  One
+	can feed any non-supported "option" to AlignCtrl() to prevent this,
+	however: >
+
+		:let alignctrl= Align#AlignCtrl("d")
+
+
+ALIGNMENT CONTROL INITIALIZATION	*alignctrl-init* *alignctrl-initialization* {{{2
+
+	If you'd like to have your own default AlignCtrl, you'll be wanting to
+	put it in a file such as: >
+
+		$HOME/.vim/after/plugin/AlignPlugin.vim
