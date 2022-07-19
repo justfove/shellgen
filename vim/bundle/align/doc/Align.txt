@@ -869,3 +869,61 @@ ALIGNMENT						*align-align* {{{2
 	  \tab  : align a table based on tabs			*alignmap-tab*
 	          (converts to spaces)
 	  \tml  : useful for aligning the trailing backslashes	|alignmap-tml|
+	          used to continue lines (shell programming, etc)
+	  \tsp  : use Align to make a table separated by blanks	|alignmap-tsp|
+	          (left justified)
+	  \ts,  : like \t, but swaps whitespace on the right of *alignmap-ts,*
+	          the commas to their left
+	  \ts:  : like \t: but swaps whitespace on the right of *alignmap-ts:*
+	          the colons to their left
+	  \ts<  : like \t< but swaps whitespace on the right of *alignmap-ts<*
+	          the less-than signs to their left
+	  \ts=  : like \t= but swaps whitespace on the right of *alignmap-ts=*
+	          the equals signs to their left
+	  \Tsp  : use Align to make a table separated by blanks	|alignmap-Tsp|
+	          (right justified)
+	  \tsq  : use Align to make a table separated by blanks	|alignmap-tsq|
+	          (left justified) -- "strings" are not split up
+	  \tt   : useful for aligning LaTeX tabular tables	|alignmap-tt|
+	  \Htd  : tabularizes html tables:			|alignmap-Htd|
+	          <TR><TD> ...field... </TD><TD> ...field... </TD></TR>
+
+		  *alignmap-t|* *alignmap-t#* *alignmap-t,* *alignmap-t:*
+		  *alignmap-t;* *alignmap-t<* *alignmap-t?* *alignmap-t~*
+		  *alignmap-m=*
+	  \tx   : make a left-justified  alignment on
+	          character "x" where "x" is: ,:<=@|#		|alignmap-t=|
+	  \Tx   : make a right-justified alignment on
+	          character "x" where "x" is: ,:<=@#		|alignmap-T=|
+	  \m=   : like \t= but aligns with %... style comments
+
+	The leading backslash is actually <leader> (see |mapleader| to learn
+	how to customize the leader to be whatever you like).  These maps use
+	the <Align.vim> package and are defined in the <AlignMaps.vim> file.
+	Although the maps use AlignCtrl options, they typically use the "m"
+	option which pushes the options (AlignPush).  The associated Align
+	call which follows will then AlignPop the user's original options
+	back.
+
+	ALIGNMENT MAP USE WITH MARK AND MOVE~
+	In the examples below, one may select the text with a "ma" at the
+	first line, move to the last line, then execute the map.
+
+	ALIGNMENT MAP USE WITH VISUAL MODE~
+	Alternatively, one may select the text with the "V" visual mode
+	command.
+
+	If you want to use visual-block mode (ctrl-v), I suggest using
+	an AlignMap with the vis.vim plugin, available at either
+
+	 stable:  http://vim.sourceforge.net/scripts/script.php?script_id=1195
+	 devel :  http://mysite.verizon.net/astronaut/vim/index.html#VIS
+
+	Use it with commands such as >
+
+		ctrl-v (move)
+		:B norm \alignmap_sequence
+<
+
+	ALIGNMENT MAP USE WITH MENUS~
+	One may use the mark-and-move style (ma, move, use the menu) or
