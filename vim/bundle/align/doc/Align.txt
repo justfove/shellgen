@@ -1012,3 +1012,53 @@ ALIGNMENT						*align-align* {{{2
 		a:=b:=c:=1;
 		aaa:=bbb:=ccc:=1;
 <
+	Bcomes: select the three assignment lines, then \a:= >
+		aa  := bb  := cc  := 1;
+		a   := b   := c   := 1;
+		aaa := bbb := ccc := 1;
+<
+
+	---------------------------
+	Alignment Map Examples: \abox			*alignmap-abox* {{{3
+	---------------------------
+
+	Original: illustrates how to comment-box some text >
+		This is some plain text
+		which will
+		soon be surrounded by a
+		comment box.
+<
+	Becomes:  Select "This..box." with ctrl-v, press \abox >
+		/***************************
+		 * This is some plain text *
+		 * which will              *
+		 * soon be surrounded by a *
+		 * comment box.            *
+		 ***************************/
+<
+
+	---------------------------
+	Alignment Map Examples: \acom			*alignmap-acom* {{{3
+	---------------------------
+
+	Original: illustrates aligning C-style comments (works for //, too) >
+		if(itworks) { /* this */
+			then= dothis; /* is a */
+			} /* set of three comments */
+<
+	Becomes: Select the three lines, press \acom >
+	        if(itworks) {         /* this                  */
+	                then= dothis; /* is a                  */
+	                }             /* set of three comments */
+<
+	Also see |alignmap-aocom|
+
+
+	---------------------------
+	Alignment Map Examples: \anum			*alignmap-anum* {{{3
+	---------------------------
+
+	First, note that the behavior of the \anum map depends on the existence
+	of either the vim variable >
+		g:alignmaps_usanumber
+<	or >
