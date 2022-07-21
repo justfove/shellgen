@@ -968,3 +968,47 @@ ALIGNMENT						*align-align* {{{2
 		struct ABC_str abc;
 		struct ABC_str def;
 <
+
+	---------------------------
+	Alignment Map Examples: \a?			*alignmap-a?* {{{3
+	---------------------------
+
+	Original: illustrates ()?: aligning >
+		printf("<%s>\n",
+		  (x == ABC)? "abc" :
+		  (x == DEFG)? "defg" :
+		  (x == HIJKL)? "hijkl" : "???");
+<
+	Becomes:  select "(x == ..." lines, then \a? >
+		printf("<%s>\n",
+		  (x == ABC)?   "abc"   :
+		  (x == DEFG)?  "defg"  :
+		  (x == HIJKL)? "hijkl" : "???");
+<
+
+	---------------------------
+	Alignment Map Examples: \a<			*alignmap-a<* {{{3
+	---------------------------
+
+	Original: illustrating aligning of << and >> >
+		cin << x;
+		cin      << y;
+		cout << "this is x=" << x;
+		cout << "but y=" << y << "is not";
+<
+	Becomes:  select "(x == ..." lines, then \a< >
+		cin  << x;
+		cin  << y;
+		cout << "this is x=" << x;
+		cout << "but y="     << y  << "is not";
+<
+
+	---------------------------
+	Alignment Map Examples: \a=			*alignmap-a=* {{{3
+	---------------------------
+
+	Original: illustrates how to align := assignments >
+		aa:=bb:=cc:=1;
+		a:=b:=c:=1;
+		aaa:=bbb:=ccc:=1;
+<
