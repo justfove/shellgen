@@ -927,3 +927,44 @@ ALIGNMENT						*align-align* {{{2
 
 	ALIGNMENT MAP USE WITH MENUS~
 	One may use the mark-and-move style (ma, move, use the menu) or
+	the visual mode style (use the V visual mode, move, then select
+	the alignment map with menu selection).  The alignment map menu
+	items are under DrChip.AlignMaps .
+
+	One may even change the top level menu name to whatever is wished; by
+	default, its >
+		let g:DrChipTopLvlMenu= "DrChip."
+<	If you set the variable to the empty string (""), then no menu items
+	will be produced.  Of course, one must have a vim with +menu, the gui
+	must be running, and |'go'| must have the menu bar suboption (ie. m
+	must be included).
+
+	COMPLEX ALIGNMENT MAP METHOD~
+	For those complex alignment maps which do alignment on constructs
+	(e.g. \acom, \adec, etc), a series of substitutes is used to insert
+	"@" symbols in appropriate locations.  Align#Align() is then used to
+	do alignment directly on "@"s; then it is followed by further
+	substitutes to do clean-up.  However, the maps \WS and \WE, used by
+	every map supported by AlignMaps, protect any original embedded "@"
+	symbols by first converting them to <DEL> characters, doing the
+	requested job, and then converting them back. >
+
+	    \WS  calls AlignMaps#WrapperStart()
+	    \WE  calls AlignMaps#WrapperEnd()
+<
+
+	---------------------------
+	Alignment Map Examples: \a,			*alignmap-a,* {{{3
+	---------------------------
+
+	Original: illustrates comma-separated declaration splitting: >
+		int a,b,c;
+		struct ABC_str abc,def;
+<
+	Becomes: >
+		int a;
+		int b;
+		int c;
+		struct ABC_str abc;
+		struct ABC_str def;
+<
