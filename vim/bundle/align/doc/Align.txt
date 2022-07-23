@@ -1120,3 +1120,54 @@ ALIGNMENT						*align-align* {{{2
 
 
 	---------------------------
+	Alignment Map Examples: \ascom			*alignmap-ascom* {{{3
+	---------------------------
+
+	Original: >
+		/* A Title */
+		int x; /* this is a comment */
+		int yzw; /* this is another comment*/
+<
+	Becomes: Select the three lines, press \ascom >
+	        /* A Title */
+	        int x;   /* this is a comment       */
+	        int yzw; /* this is another comment */
+<
+
+	---------------------------
+	Alignment Map Examples: \adec			*alignmap-adec* {{{3
+	---------------------------
+
+	Original: illustrates how to clean up C/C++ declarations >
+		int     a;
+		float   b;
+		double *c=NULL;
+		char x[5];
+		struct  abc_str abc;
+		struct  abc_str *pabc;
+		int     a;              /* a   */
+		float   b;              /* b   */
+		double *c=NULL;              /* b   */
+		char x[5]; /* x[5] */
+		struct  abc_str abc;    /* abc */
+		struct  abc_str *pabc;    /* pabc */
+		static   int     a;              /* a   */
+		static   float   b;              /* b   */
+		static   double *c=NULL;              /* b   */
+		static   char x[5]; /* x[5] */
+		static   struct  abc_str abc;    /* abc */
+		static   struct  abc_str *pabc;    /* pabc */
+<
+	Becomes: Select the declarations text, then \adec >
+		int                    a;
+		float                  b;
+		double                *c    = NULL;
+		char                   x[5];
+		struct abc_str         abc;
+		struct abc_str        *pabc;
+		int                    a;           /* a    */
+		float                  b;           /* b    */
+		double                *c    = NULL; /* b    */
+		char                   x[5];        /* x[5] */
+		struct abc_str         abc;         /* abc  */
+		struct abc_str        *pabc;        /* pabc */
