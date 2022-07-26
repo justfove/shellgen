@@ -1171,3 +1171,38 @@ ALIGNMENT						*align-align* {{{2
 		char                   x[5];        /* x[5] */
 		struct abc_str         abc;         /* abc  */
 		struct abc_str        *pabc;        /* pabc */
+		static int             a;           /* a    */
+		static float           b;           /* b    */
+		static double         *c    = NULL; /* b    */
+		static char            x[5];        /* x[5] */
+		static struct abc_str  abc;         /* abc  */
+		static struct abc_str *pabc;        /* pabc */
+<
+
+	---------------------------
+	Alignment Map Examples: \adef			*alignmap-adef* {{{3
+	---------------------------
+
+	Original: illustrates how to line up #def'initions >
+		#define ONE 1
+		#define TWO 22
+		#define THREE 333
+		#define FOUR 4444
+<
+	Becomes: Select four definition lines, apply \adef >
+	#	 define ONE   1
+	#	 define TWO   22
+	#	 define THREE 333
+	#	 define FOUR  4444
+<
+
+	---------------------------
+	Alignment Map Examples: \afnc			*alignmap-afnc* {{{3
+	---------------------------
+
+	This map is an exception to the usual selection rules.
+	It uses "]]" to find the function body's leading "{".
+	Just put the cursor anywhere in the function arguments and
+	the entire function declaration should be processed.
+
+	Because "]]" looks for that "{" in the first column, the
