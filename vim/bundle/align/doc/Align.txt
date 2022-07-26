@@ -1206,3 +1206,49 @@ ALIGNMENT						*align-align* {{{2
 	the entire function declaration should be processed.
 
 	Because "]]" looks for that "{" in the first column, the
+	"original" and "becomes" examples are in the first column,
+	too.
+
+	Original: illustrates lining up ansi-c style function definitions >
+	int f(
+	  struct abc_str ***a, /* one */
+	  long *b, /* two */
+	  int c) /* three */
+	{
+	}
+<
+	Becomes: put cursor anywhere before the '{', press \afnc >
+	int f(
+	  struct abc_str ***a,	/* one   */
+	  long             *b,	/* two   */
+	  int               c)	/* three */
+	{
+	}
+<
+
+	---------------------------
+	Alignment Map Examples: \adcom			*alignmap-adcom* {{{3
+	---------------------------
+
+	Original: illustrates aligning comments that don't begin
+		lines (optionally after some whitespace). >
+		struct {
+			/* this is a test */
+			int x; /* of how */
+			double y; /* to use adcom */
+			};
+<
+	Becomes: Select the inside lines of the structure,
+		then press \adcom.  The comment-only
+		line is ignored but the other two comments
+		get aligned. >
+		struct {
+                        /* this is a test */
+                        int x;    /* of how       */
+                        double y; /* to use adcom */
+			};
+<
+
+	---------------------------
+	Alignment Map Examples: \aocom			*alignmap-aocom* {{{3
+	---------------------------
