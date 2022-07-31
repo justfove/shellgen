@@ -1252,3 +1252,60 @@ ALIGNMENT						*align-align* {{{2
 	---------------------------
 	Alignment Map Examples: \aocom			*alignmap-aocom* {{{3
 	---------------------------
+
+	Original: illustrates how to align C-style comments (works for //, too)
+	          but restricted only to aligning with those lines containing
+		  comments.  See the difference from \acom (|alignmap-acom|). >
+		if(itworks) { /* this comment */
+			then= dothis;
+			} /* only appears on two lines */
+<
+	Becomes: Select the three lines, press \aocom >
+                if(itworks) { /* this comment              */
+                        then= dothis;
+                        }     /* only appears on two lines */
+<
+	Also see |alignmap-acom|
+
+
+	---------------------------			*alignmap-Tsp*
+	Alignment Map Examples: \tsp			*alignmap-tsp* {{{3
+	---------------------------
+
+	Normally Align can't use white spaces for field separators as such
+	characters are ignored surrounding field separators.  The \tsp and
+	\Tsp maps get around this limitation.
+
+	Original: >
+	 one two three four five
+	 six seven eight nine ten
+	 eleven twelve thirteen fourteen fifteen
+<
+	Becomes: Select the lines, \tsp >
+	 one    two    three    four     five
+	 six    seven  eight    nine     ten
+	 eleven twelve thirteen fourteen fifteen
+<
+	Becomes: Select the lines, \Tsp >
+	    one    two    three     four    five
+	    six  seven    eight     nine     ten
+	 eleven twelve thirteen fourteen fifteen
+<
+
+	---------------------------
+	Alignment Map Examples: \tsq			*alignmap-tsq* {{{3
+	---------------------------
+
+	The \tsp map is useful for aligning tables based on white space,
+	but sometimes one wants double-quoted strings to act as a single
+	object in spite of embedded spaces.  The \tsq map was invented
+	to support this. (thanks to Leif Wickland)
+
+	Original: >
+	 "one two" three
+	 four "five six"
+<
+	Becomes: Select the lines, \tsq >
+	 "one two" three
+	 four      "five six"
+<
