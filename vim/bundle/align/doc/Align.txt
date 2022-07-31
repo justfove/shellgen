@@ -1398,3 +1398,50 @@ ALIGNMENT						*align-align* {{{2
 	  <TR><TD> ...field three... </TD><TD> ...field four... </TD></TR>
 <
 ==============================================================================
+4. Alignment Tools' History				*align-history* {{{1
+
+ALIGN HISTORY								{{{2
+	36 : May 20, 2009 * Previously, the "W" AlignCtrl setting, intended
+	                    to retain initial white space, did so by convert-
+	                    ing any leading tabs into an equivalent quantity
+	                    of blanks (using the current tabstop setting).
+	                    Align will now retain leading tabs.
+	     Nov 24, 2009 * QArgSplitter() used split(), intending to split
+	                    on white space only.  However, the \tab map
+	                    uses ctrl-o as a separator instead of tabs; the
+	                    split() function treated the ctrl-o as a whitespace
+	                    character, too.  Solution: give split() an explicit
+	                    pattern matching blanks and tabs, only.  \tab now
+	                    works again!
+	     Jun 29, 2010 * included |g:AlignSkip| and |alignctrl-star| support
+	     May 10, 2011 * if the range is only one line, then Align will
+	                    automatically grow the range to accommodate all
+	                    lines containing the first separator pattern
+	                    surrounding the current line.
+	     Aug 05, 2011 * g:Align_xstrlen usage extended to permit users to
+	                    specify a function by name which computes string
+	                    length.
+	     Oct 27, 2011 * (reported by Fco Javier) reported a problem with
+	                    the default s:Strlen() result; there was a missing
+	                    "let".  Fixed.
+	     Nov 10, 2011 * (Lewis Thompson) Align was doing "set noet" when
+	                    it should've been doing "setlocal noet".
+	     Dec 22, 2011 * modifed s:Strlen() to use |strdisplaywidth()| when
+	                    g:Align_xstrlen is zero.
+	35 : Nov 02, 2008 * g:loaded_AlignPlugin testing to prevent re-loading
+	                    installed
+	     Nov 19, 2008 * new sanity check for an AlignStyle of just ":"
+	     Jan 08, 2009 * save&restore of |'mod'| now done with local
+	                    variant
+	34 : Jul 08, 2008 * using :AlignCtrl before entering any alignment
+	                    control commands was causing an error.
+	33 : Sep 20, 2007 * s:Strlen() introduced to support various ways
+	                    used to represent characters and their effects
+	                    on string lengths.  See |align-strlen|.
+	                  * Align now accepts "..." -- so it can accept
+	                    whitespace as separators.
+	32 : Aug 18, 2007 * uses |<q-args>| instead of |<f-args>| plus a
+	                    custom argument splitter to allow patterns with
+	                    backslashes to slide in unaltered.
+	31 : Aug 06, 2007 * :[range]Align! [AlignCtrl settings] pattern(s)
+	                    implemented.
