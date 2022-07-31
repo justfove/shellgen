@@ -1309,3 +1309,44 @@ ALIGNMENT						*align-align* {{{2
 	 "one two" three
 	 four      "five six"
 <
+
+	---------------------------
+	Alignment Map Examples: \tt			*alignmap-tt* {{{3
+	---------------------------
+
+	Original: illustrates aligning a LaTex Table >
+	 \begin{tabular}{||c|l|r||}
+	 \hline\hline
+	   one&two&three\\ \hline
+	   four&five&six\\
+	   seven&eight&nine\\
+	 \hline\hline
+	 \end{tabular}
+<
+	Becomes: Select the three lines inside the table >
+	(ie. one..,four..,seven..) and press \tt
+	 \begin{tabular}{||c|l|r||}
+	 \hline\hline
+	   one   & two   & three \\ \hline
+	   four  & five  & six   \\
+	   seven & eight & nine  \\
+	 \hline\hline
+	 \end{tabular}
+<
+
+	----------------------------
+	Alignment Map Examples: \tml			*alignmap-tml* {{{3
+	----------------------------
+
+        Original:  illustrates aligning multi-line continuation marks >
+	one \
+	two three \
+	four five six \
+	seven \\ \
+	eight \nine \
+	ten \
+<
+        Becomes:  >
+        one           \
+        two three     \
+        four five six \
