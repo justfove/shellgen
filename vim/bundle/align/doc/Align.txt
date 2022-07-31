@@ -1350,3 +1350,51 @@ ALIGNMENT						*align-align* {{{2
         one           \
         two three     \
         four five six \
+        seven \\      \
+        eight \nine   \
+        ten           \
+<
+
+	---------------------------
+	Alignment Map Examples: \t=			*alignmap-t=* {{{3
+	---------------------------
+
+	Original: illustrates left-justified aligning of = >
+		aa=bb=cc=1;/*one*/
+		a=b=c=1;/*two*/
+		aaa=bbb=ccc=1;/*three*/
+<
+	Becomes: Select the three equations, press \t= >
+		aa  = bb  = cc  = 1; /* one   */
+		a   = b   = c   = 1; /* two   */
+		aaa = bbb = ccc = 1; /* three */
+<
+
+	---------------------------
+	Alignment Map Examples: \T=			*alignmap-T=* {{{3
+	---------------------------
+
+	Original: illustrates right-justified aligning of = >
+		aa=bb=cc=1; /* one */
+		a=b=c=1; /* two */
+		aaa=bbb=ccc=1; /* three */
+<
+	Becomes: Select the three equations, press \T= >
+                 aa =  bb =  cc = 1; /* one   */
+                  a =   b =   c = 1; /* two   */
+                aaa = bbb = ccc = 1; /* three */
+<
+
+	---------------------------
+	Alignment Map Examples: \Htd			*alignmap-Htd* {{{3
+	---------------------------
+
+	Original: for aligning tables with html >
+	  <TR><TD>...field one...</TD><TD>...field two...</TD></TR>
+	  <TR><TD>...field three...</TD><TD>...field four...</TD></TR>
+<
+	Becomes: Select <TR>... lines, press \Htd >
+	  <TR><TD> ...field one...   </TD><TD> ...field two...  </TD></TR>
+	  <TR><TD> ...field three... </TD><TD> ...field four... </TD></TR>
+<
+==============================================================================
