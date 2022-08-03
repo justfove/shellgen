@@ -1589,3 +1589,7 @@ ALIGNMENT MAP HISTORY					*alignmap-history* {{{2
 	v11   Jul 08, 2002 :   \abox bug fix
 	 v9   Jun 25, 2002 :   \abox now handles leading initial whitespace
 	                   :   various bugfixes to \afnc, \T=, etc
+
+==============================================================================
+Modelines: {{{1
+vim:tw=78:ts=8:ft=help:fdm=marker:
