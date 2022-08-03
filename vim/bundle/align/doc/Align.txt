@@ -1445,3 +1445,45 @@ ALIGN HISTORY								{{{2
 	                    backslashes to slide in unaltered.
 	31 : Aug 06, 2007 * :[range]Align! [AlignCtrl settings] pattern(s)
 	                    implemented.
+	30 : Feb 12, 2007 * now uses |setline()|
+	29 : Jan 18, 2006 * cecutil updated to use keepjumps
+	     Feb 23, 2006 * Align now converted to vim 7.0 style using
+	                    auto-loading functions.
+	28 : Aug 17, 2005 * report option workaround
+	     Oct 24, 2005 * AlignCtrl l:  wasn't behaving as expected; fixed
+	27 : Apr 15, 2005 : cpo workaround
+	                    ignorecase workaround
+	26 : Aug 20, 2004 : loaded_align now also indicates version number
+	                    GetLatestVimScripts :AutoInstall: now supported
+	25 : Jul 27, 2004 : For debugging, uses Dfunc(), Dret(), and Decho()
+	24 : Mar 03, 2004 : (should've done this earlier!) visualmode(1)
+	                    not supported until v6.2, now Align will avoid
+	                    calling it for earlier versions.  Visualmode
+	                    clearing won't take place then, of course.
+	23 : Oct 07, 2003 : Included Leif Wickland's ReplaceQuotedSpaces()
+	                    function which supports \tsq
+	22 : Jan 29, 2003 : Now requires 6.1.308 or later to clear visualmode()
+	21 : Jan 10, 2003 : BugFix: similar problem to #19; new code
+	                    bypasses "norm! v\<Esc>" until initialization
+	                    is over.
+	20 : Dec 30, 2002 : BugFix: more on "unable to highlight" fixed
+	19 : Nov 21, 2002 : BugFix: some terminals gave an "unable to highlight"
+	                    message at startup; Hari Krishna Dara tracked it
+	                    down; a silent! now included to prevent noise.
+	18 : Nov 04, 2002 : BugFix: re-enabled anti-repeated-loading
+	17 : Nov 04, 2002 : BugFix: forgot to have AlignPush() push s:AlignSep
+	                    AlignCtrl now clears visual-block mode when used so
+	                    that Align won't try to use old visual-block
+	                    selection marks '< '>
+	16 : Sep 18, 2002 : AlignCtrl <>| options implemented (separator
+	                    justification)
+	15 : Aug 22, 2002 : bug fix: AlignCtrl's ":" now acts as a modifier of
+	                             the preceding alignment operator (lrc)
+	14 : Aug 20, 2002 : bug fix: AlignCtrl default now keeps &ic unchanged
+	                    bug fix: Align, on end-field, wasn't using correct
+	                    alignop bug fix: Align, on end-field, was appending
+	                    padding
+	13 : Aug 19, 2002 : bug fix: zero-length g/v patterns are accepted
+	                    bug fix: always skip blank lines
+	                    bug fix: AlignCtrl default now also clears g and v
+	                             patterns
