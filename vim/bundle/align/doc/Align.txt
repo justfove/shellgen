@@ -1540,3 +1540,52 @@ ALIGNMENT MAP HISTORY					*alignmap-history* {{{2
 	                       of backquotes.
 	v34   Feb 23, 2006 : * AlignMaps now converted to vim 7.0 style using
 	                       auto-loading functions.
+	v33   Oct 12, 2005 : * \ts, now uses P1 in its AlignCtrl call
+	v32   Jun 28, 2005 : * s:WrapperStart() changed to AlignWrapperStart()
+	                       s:WrapperEnd() changed to AlignWrapperEnd()
+	                       These changes let the AlignWrapper...()s to be
+	                       used outside of AlignMaps.vim
+	v31   Feb 01, 2005 : * \adcom included, with help
+	                     * \a, now works across multiple lines with
+	                       different types
+	                     * AlignMaps now uses <cecutil.vim> for its mark and
+	                       window-position saving and restoration
+	      Mar 04, 2005   * improved \a,
+	      Apr 06, 2005   * included \aenum, \aunum, and provided
+	              g:alignmaps_{usa|euro]number} options
+	v30   Aug 20, 2004 : * \a, : handles embedded assignments and does \adec
+	                     * \acom  now can handle Doxygen-style comments
+	                     * g:loaded_alignmaps now also indicates version
+	                     * internal maps \WE and \WS are now re-entrant
+	v29   Jul 27, 2004 : * \tml aligns trailing multi-line single
+	                      backslashes (thanks to Raul Benavente!)
+	v28   May 13, 2004 : * \a, had problems with leading blanks; fixed!
+	v27   Mar 31, 2004 : * \T= was having problems with == and !=
+	                     * Fixed more problems with \adec
+	v26   Dec 09, 2003 : * \ascom now also ignores lines without comments
+	                     * \tt  \& now not matched
+	                     * \a< handles both << and >>
+	v25   Nov 14, 2003 : * included \anum (aligns numbers with periods and
+	                       commas).  \anum also supported with ctrl-v mode.
+	                     * \ts, \Ts, : (aligns on commas, then swaps leading
+	                       spaces with commas)
+	                     * \adec ignores preprocessor lines and lines with
+	                       with comments-only
+	v23   Sep 10, 2003 : * Bugfix for \afnc - no longer overwrites marks y,z
+	                     * fixed bug in \tsp, \tab, \Tsp, and \Tab - lines
+	                       containing backslashes were having their
+	                       backslashes removed.  Included Leif Wickland's
+	                       patch for \tsq.
+	                     * \adef now ignores lines holding comments only
+	v18   Aug 22, 2003 :   \a< lines up C++'s << operators
+	                       saves/restores gdefault option (sets to nogd)
+	                       all b:..varname.. are now b:alignmaps_..varname..
+	v17   Nov 04, 2002 :   \afnc now handles // comments correctly and
+	                       commas within comments
+	v16   Sep 10, 2002 :   changed : to :silent! for \adec
+	v15   Aug 27, 2002 :   removed some <c-v>s
+	v14   Aug 20, 2002 :   \WS, \WE mostly moved to functions, marks y and z
+	                       now restored
+	v11   Jul 08, 2002 :   \abox bug fix
+	 v9   Jun 25, 2002 :   \abox now handles leading initial whitespace
+	                   :   various bugfixes to \afnc, \T=, etc
