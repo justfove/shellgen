@@ -99,3 +99,52 @@ fun! SaveWinPosn(...)
   let swwline   = winline() - 1                    " save-window window line
   let swwcol    = virtcol(".") - wincol()          " save-window window column
   let savedposn = ""
+"  echomsg "Decho: sw[".swline.",".swcol."] sww[".swwline.",".swwcol."]"
+  let savedposn = "call GoWinbufnr(".winbufnr(0).")"
+  let savedposn = savedposn."|".s:modifier.swline
+  let savedposn = savedposn."|".s:modifier."norm! 0z\<cr>"
+  if swwline > 0
+   let savedposn= savedposn.":".s:modifier."call s:WinLineRestore(".(swwline+1).")\<cr>"
+  endif
+  if swwcol > 0
+   let savedposn= savedposn.":".s:modifier."norm! 0".swwcol."zl\<cr>"
+  endif
+  let savedposn = savedposn.":".s:modifier."call cursor(".swline.",".swcol.")\<cr>"
+
+  " save window position in
+  " b:cecutil_winposn_{iwinposn} (stack)
+  " only when SaveWinPosn() is used
+  if a:0 == 0
+   if !exists("b:cecutil_iwinposn")
+	let b:cecutil_iwinposn= 1
+   else
+	let b:cecutil_iwinposn= b:cecutil_iwinposn + 1
+   endif
+"   echomsg "Decho: saving posn to SWP stack"
+   let b:cecutil_winposn{b:cecutil_iwinposn}= savedposn
+  endif
+
+  let &l:so = so_keep
+  let &siso = siso_keep
+  let &l:ss = ss_keep
+
+"  if exists("b:cecutil_iwinposn")                                                                  " Decho
+"   echomsg "Decho: b:cecutil_winpos{".b:cecutil_iwinposn."}[".b:cecutil_winposn{b:cecutil_iwinposn}."]"
+"  else                                                                                             " Decho
+"   echomsg "Decho: b:cecutil_iwinposn doesn't exist"
+"  endif                                                                                            " Decho
+"  echomsg "Decho: SaveWinPosn [".savedposn."]"
+  return savedposn
+endfun
+
+" ---------------------------------------------------------------------
+" RestoreWinPosn: {{{2
+"      call RestoreWinPosn()
+"      call RestoreWinPosn(winposn)
+fun! RestoreWinPosn(...)
+"  echomsg "Decho: RestoreWinPosn() a:0=".a:0
+"  echomsg "Decho: getline(1)<".getline(1).">"
+"  echomsg "Decho: line(.)=".line(".")
+  if line("$") == 1 && getline(1) == ""
+"   echomsg "Decho: RestoreWinPosn : empty buffer"
+   return ""
