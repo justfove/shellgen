@@ -148,3 +148,42 @@ fun! RestoreWinPosn(...)
   if line("$") == 1 && getline(1) == ""
 "   echomsg "Decho: RestoreWinPosn : empty buffer"
    return ""
+  endif
+  let so_keep   = &l:so
+  let siso_keep = &l:siso
+  let ss_keep   = &l:ss
+  setlocal so=0 siso=0 ss=0
+
+  if a:0 == 0 || a:1 == ""
+   " use saved window position in b:cecutil_winposn{b:cecutil_iwinposn} if it exists
+   if exists("b:cecutil_iwinposn") && exists("b:cecutil_winposn{b:cecutil_iwinposn}")
+"    echomsg "Decho: using stack b:cecutil_winposn{".b:cecutil_iwinposn."}<".b:cecutil_winposn{b:cecutil_iwinposn}.">"
+	try
+	 exe s:modifier.b:cecutil_winposn{b:cecutil_iwinposn}
+	catch /^Vim\%((\a\+)\)\=:E749/
+	 " ignore empty buffer error messages
+	endtry
+	" normally drop top-of-stack by one
+	" but while new top-of-stack doesn't exist
+	" drop top-of-stack index by one again
+	if b:cecutil_iwinposn >= 1
+	 unlet b:cecutil_winposn{b:cecutil_iwinposn}
+	 let b:cecutil_iwinposn= b:cecutil_iwinposn - 1
+	 while b:cecutil_iwinposn >= 1 && !exists("b:cecutil_winposn{b:cecutil_iwinposn}")
+	  let b:cecutil_iwinposn= b:cecutil_iwinposn - 1
+	 endwhile
+	 if b:cecutil_iwinposn < 1
+	  unlet b:cecutil_iwinposn
+	 endif
+	endif
+   else
+	echohl WarningMsg
+	echomsg "***warning*** need to SaveWinPosn first!"
+	echohl None
+   endif
+
+  else	 " handle input argument
+"   echomsg "Decho: using input a:1<".a:1.">"
+   " use window position passed to this function
+   exe a:1
+   " remove a:1 pattern from b:cecutil_winposn{b:cecutil_iwinposn} stack
