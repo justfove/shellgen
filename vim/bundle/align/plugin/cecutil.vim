@@ -51,3 +51,51 @@ if !hasmapto('<Plug>SaveWinPosn')
 endif
 if !hasmapto('<Plug>RestoreWinPosn')
  map <unique> <Leader>rwp <Plug>RestoreWinPosn
+endif
+nmap <silent> <Plug>SaveWinPosn		:call SaveWinPosn()<CR>
+nmap <silent> <Plug>RestoreWinPosn	:call RestoreWinPosn()<CR>
+
+" ---------------------------------------------------------------------
+" Command Interface: {{{2
+com! -bar -nargs=0 SWP	call SaveWinPosn()
+com! -bar -nargs=? RWP	call RestoreWinPosn(<args>)
+com! -bar -nargs=1 SM	call SaveMark(<q-args>)
+com! -bar -nargs=1 RM	call RestoreMark(<q-args>)
+com! -bar -nargs=1 DM	call DestroyMark(<q-args>)
+
+com! -bar -nargs=1 WLR	call s:WinLineRestore(<q-args>)
+
+if v:version < 630
+ let s:modifier= "sil! "
+else
+ let s:modifier= "sil! keepj "
+endif
+
+" ===============
+" Functions: {{{1
+" ===============
+
+" ---------------------------------------------------------------------
+" SaveWinPosn: {{{2
+"    let winposn= SaveWinPosn()  will save window position in winposn variable
+"    call SaveWinPosn()          will save window position in b:cecutil_winposn{b:cecutil_iwinposn}
+"    let winposn= SaveWinPosn(0) will *only* save window position in winposn variable (no stacking done)
+fun! SaveWinPosn(...)
+"  echomsg "Decho: SaveWinPosn() a:0=".a:0
+  if line("$") == 1 && getline(1) == ""
+"   echomsg "Decho: SaveWinPosn : empty buffer"
+   return ""
+  endif
+  let so_keep   = &l:so
+  let siso_keep = &siso
+  let ss_keep   = &l:ss
+  setlocal so=0 siso=0 ss=0
+
+  let swline = line(".")                           " save-window line in file
+  let swcol  = col(".")                            " save-window column in file
+  if swcol >= col("$")
+   let swcol= swcol + virtcol(".") - virtcol("$")  " adjust for virtual edit (cursor past end-of-line)
+  endif
+  let swwline   = winline() - 1                    " save-window window line
+  let swwcol    = virtcol(".") - wincol()          " save-window window column
+  let savedposn = ""
