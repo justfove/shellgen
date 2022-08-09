@@ -284,3 +284,48 @@ fun! SaveMark(markname)
   endif
 
   let &lz= lzkeep
+
+"  call Dret("SaveMark : savemark<".savemark.">")
+  return savemark
+endfun
+
+" ---------------------------------------------------------------------
+" RestoreMark: {{{2
+"   call RestoreMark("a")  -or- call RestoreMark(savemark)
+fun! RestoreMark(markname)
+"  call Dfunc("RestoreMark(markname<".a:markname.">)")
+
+  if strlen(a:markname) <= 0
+"   call Dret("RestoreMark : no such mark")
+   return
+  endif
+  let markname= strpart(a:markname,0,1)
+  if markname !~ '\a'
+   " handles 'a -> a styles
+   let markname= strpart(a:markname,1,1)
+  endif
+"  call Decho("markname=".markname." strlen(a:markname)=".strlen(a:markname))
+
+  let lzkeep  = &lz
+  set lz
+  let winposn = SaveWinPosn(0)
+
+  if strlen(a:markname) <= 2
+   if exists("g:savemark_{markname}") && strlen(g:savemark_{markname}) != 0
+	" use global variable g:savemark_{markname}
+"	call Decho("use savemark list")
+	call RestoreWinPosn(g:savemark_{markname})
+	exe "norm! m".markname
+   endif
+  else
+   " markname is a savemark command (string)
+"	call Decho("use savemark command")
+   let markcmd= strpart(a:markname,1)
+   call RestoreWinPosn(markcmd)
+   exe "norm! m".markname
+  endif
+
+  call RestoreWinPosn(winposn)
+  let &lz       = lzkeep
+
+"  call Dret("RestoreMark")
