@@ -236,3 +236,51 @@ fun! s:WinLineRestore(swwline)
   endwhile
 "  echomsg "Decho: s:WinLineRestore"
 endfun
+
+" ---------------------------------------------------------------------
+" GoWinbufnr: go to window holding given buffer (by number) {{{2
+"   Prefers current window; if its buffer number doesn't match,
+"   then will try from topleft to bottom right
+fun! GoWinbufnr(bufnum)
+"  call Dfunc("GoWinbufnr(".a:bufnum.")")
+  if winbufnr(0) == a:bufnum
+"   call Dret("GoWinbufnr : winbufnr(0)==a:bufnum")
+   return
+  endif
+  winc t
+  let first=1
+  while winbufnr(0) != a:bufnum && (first || winnr() != 1)
+  	winc w
+	let first= 0
+   endwhile
+"  call Dret("GoWinbufnr")
+endfun
+
+" ---------------------------------------------------------------------
+" SaveMark: sets up a string saving a mark position. {{{2
+"           For example, SaveMark("a")
+"           Also sets up a global variable, g:savemark_{markname}
+fun! SaveMark(markname)
+"  call Dfunc("SaveMark(markname<".a:markname.">)")
+  let markname= a:markname
+  if strpart(markname,0,1) !~ '\a'
+   let markname= strpart(markname,1,1)
+  endif
+"  call Decho("markname=".markname)
+
+  let lzkeep  = &lz
+  set lz
+
+  if 1 <= line("'".markname) && line("'".markname) <= line("$")
+   let winposn               = SaveWinPosn(0)
+   exe s:modifier."norm! `".markname
+   let savemark              = SaveWinPosn(0)
+   let g:savemark_{markname} = savemark
+   let savemark              = markname.savemark
+   call RestoreWinPosn(winposn)
+  else
+   let g:savemark_{markname} = ""
+   let savemark              = ""
+  endif
+
+  let &lz= lzkeep
