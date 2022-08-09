@@ -187,3 +187,52 @@ fun! RestoreWinPosn(...)
    " use window position passed to this function
    exe a:1
    " remove a:1 pattern from b:cecutil_winposn{b:cecutil_iwinposn} stack
+   if exists("b:cecutil_iwinposn")
+	let jwinposn= b:cecutil_iwinposn
+	while jwinposn >= 1                     " search for a:1 in iwinposn..1
+	 if exists("b:cecutil_winposn{jwinposn}")    " if it exists
+	  if a:1 == b:cecutil_winposn{jwinposn}      " and the pattern matches
+	   unlet b:cecutil_winposn{jwinposn}            " unlet it
+	   if jwinposn == b:cecutil_iwinposn            " if at top-of-stack
+		let b:cecutil_iwinposn= b:cecutil_iwinposn - 1      " drop stacktop by one
+	   endif
+	  endif
+	 endif
+	 let jwinposn= jwinposn - 1
+	endwhile
+   endif
+  endif
+
+  " Seems to be something odd: vertical motions after RWP
+  " cause jump to first column.  The following fixes that.
+  " Note: was using wincol()>1, but with signs, a cursor
+  " at column 1 yields wincol()==3.  Beeping ensued.
+  let vekeep= &ve
+  set ve=all
+  if virtcol('.') > 1
+   exe s:modifier."norm! hl"
+  elseif virtcol(".") < virtcol("$")
+   exe s:modifier."norm! lh"
+  endif
+  let &ve= vekeep
+
+  let &l:so   = so_keep
+  let &l:siso = siso_keep
+  let &l:ss   = ss_keep
+
+"  echomsg "Decho: RestoreWinPosn"
+endfun
+
+" ---------------------------------------------------------------------
+" s:WinLineRestore: {{{2
+fun! s:WinLineRestore(swwline)
+"  echomsg "Decho: s:WinLineRestore(swwline=".a:swwline.")"
+  while winline() < a:swwline
+   let curwinline= winline()
+   exe s:modifier."norm! \<c-y>"
+   if curwinline == winline()
+	break
+   endif
+  endwhile
+"  echomsg "Decho: s:WinLineRestore"
+endfun
