@@ -329,3 +329,49 @@ fun! RestoreMark(markname)
   let &lz       = lzkeep
 
 "  call Dret("RestoreMark")
+endfun
+
+" ---------------------------------------------------------------------
+" DestroyMark: {{{2
+"   call DestroyMark("a")  -- destroys mark
+fun! DestroyMark(markname)
+"  call Dfunc("DestroyMark(markname<".a:markname.">)")
+
+  " save options and set to standard values
+  let reportkeep= &report
+  let lzkeep    = &lz
+  set lz report=10000
+
+  let markname= strpart(a:markname,0,1)
+  if markname !~ '\a'
+   " handles 'a -> a styles
+   let markname= strpart(a:markname,1,1)
+  endif
+"  call Decho("markname=".markname)
+
+  let curmod  = &mod
+  let winposn = SaveWinPosn(0)
+  1
+  let lineone = getline(".")
+  exe "k".markname
+  d
+  put! =lineone
+  let &mod    = curmod
+  call RestoreWinPosn(winposn)
+
+  " restore options to user settings
+  let &report = reportkeep
+  let &lz     = lzkeep
+
+"  call Dret("DestroyMark")
+endfun
+
+" ---------------------------------------------------------------------
+" QArgSplitter: to avoid \ processing by <f-args>, <q-args> is needed. {{{2
+" However, <q-args> doesn't split at all, so this one returns a list
+" with splits at all whitespace (only!), plus a leading length-of-list.
+" The resulting list:  qarglist[0] corresponds to a:0
+"                      qarglist[i] corresponds to a:{i}
+fun! QArgSplitter(qarg)
+"  call Dfunc("QArgSplitter(qarg<".a:qarg.">)")
+  let qarglist    = split(a:qarg)
