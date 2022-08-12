@@ -375,3 +375,53 @@ endfun
 fun! QArgSplitter(qarg)
 "  call Dfunc("QArgSplitter(qarg<".a:qarg.">)")
   let qarglist    = split(a:qarg)
+  let qarglistlen = len(qarglist)
+  let qarglist    = insert(qarglist,qarglistlen)
+"  call Dret("QArgSplitter ".string(qarglist))
+  return qarglist
+endfun
+
+" ---------------------------------------------------------------------
+" ListWinPosn: {{{2
+"fun! ListWinPosn()                                                        " Decho 
+"  if !exists("b:cecutil_iwinposn") || b:cecutil_iwinposn == 0             " Decho 
+"   call Decho("nothing on SWP stack")                                     " Decho
+"  else                                                                    " Decho
+"   let jwinposn= b:cecutil_iwinposn                                       " Decho 
+"   while jwinposn >= 1                                                    " Decho 
+"    if exists("b:cecutil_winposn{jwinposn}")                              " Decho 
+"     call Decho("winposn{".jwinposn."}<".b:cecutil_winposn{jwinposn}.">") " Decho 
+"    else                                                                  " Decho 
+"     call Decho("winposn{".jwinposn."} -- doesn't exist")                 " Decho 
+"    endif                                                                 " Decho 
+"    let jwinposn= jwinposn - 1                                            " Decho 
+"   endwhile                                                               " Decho 
+"  endif                                                                   " Decho
+"endfun                                                                    " Decho 
+"com! -nargs=0 LWP	call ListWinPosn()                                    " Decho 
+
+" ---------------------------------------------------------------------
+" SaveUserMaps: this function sets up a script-variable (s:restoremap) {{{2
+"          which can be used to restore user maps later with
+"          call RestoreUserMaps()
+"
+"          mapmode - see :help maparg for details (n v o i c l "")
+"                    ex. "n" = Normal
+"                    The letters "b" and "u" are optional prefixes;
+"                    The "u" means that the map will also be unmapped
+"                    The "b" means that the map has a <buffer> qualifier
+"                    ex. "un"  = Normal + unmapping
+"                    ex. "bn"  = Normal + <buffer>
+"                    ex. "bun" = Normal + <buffer> + unmapping
+"                    ex. "ubn" = Normal + <buffer> + unmapping
+"          maplead - see mapchx
+"          mapchx  - "<something>" handled as a single map item.
+"                    ex. "<left>"
+"                  - "string" a string of single letters which are actually
+"                    multiple two-letter maps (using the maplead:
+"                    maplead . each_character_in_string)
+"                    ex. maplead="\" and mapchx="abc" saves user mappings for
+"                        \a, \b, and \c
+"                    Of course, if maplead is "", then for mapchx="abc",
+"                    mappings for a, b, and c are saved.
+"                  - :something  handled as a single map item, w/o the ":"
