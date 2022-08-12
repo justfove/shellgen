@@ -425,3 +425,47 @@ endfun
 "                    Of course, if maplead is "", then for mapchx="abc",
 "                    mappings for a, b, and c are saved.
 "                  - :something  handled as a single map item, w/o the ":"
+"                    ex.  mapchx= ":abc" will save a mapping for "abc"
+"          suffix  - a string unique to your plugin
+"                    ex.  suffix= "DrawIt"
+fun! SaveUserMaps(mapmode,maplead,mapchx,suffix)
+"  call Dfunc("SaveUserMaps(mapmode<".a:mapmode."> maplead<".a:maplead."> mapchx<".a:mapchx."> suffix<".a:suffix.">)")
+
+  if !exists("s:restoremap_{a:suffix}")
+   " initialize restoremap_suffix to null string
+   let s:restoremap_{a:suffix}= ""
+  endif
+
+  " set up dounmap: if 1, then save and unmap  (a:mapmode leads with a "u")
+  "                 if 0, save only
+  let mapmode  = a:mapmode
+  let dounmap  = 0
+  let dobuffer = ""
+  while mapmode =~ '^[bu]'
+   if     mapmode =~ '^u'
+    let dounmap = 1
+    let mapmode = strpart(a:mapmode,1)
+   elseif mapmode =~ '^b'
+    let dobuffer = "<buffer> "
+    let mapmode  = strpart(a:mapmode,1)
+   endif
+  endwhile
+"  call Decho("dounmap=".dounmap."  dobuffer<".dobuffer.">")
+ 
+  " save single map :...something...
+  if strpart(a:mapchx,0,1) == ':'
+"   call Decho("save single map :...something...")
+   let amap= strpart(a:mapchx,1)
+   if amap == "|" || amap == "\<c-v>"
+    let amap= "\<c-v>".amap
+   endif
+   let amap                    = a:maplead.amap
+   let s:restoremap_{a:suffix} = s:restoremap_{a:suffix}."|:silent! ".mapmode."unmap ".dobuffer.amap
+   if maparg(amap,mapmode) != ""
+    let maprhs                  = substitute(maparg(amap,mapmode),'|','<bar>','ge')
+	let s:restoremap_{a:suffix} = s:restoremap_{a:suffix}."|:".mapmode."map ".dobuffer.amap." ".maprhs
+   endif
+   if dounmap
+	exe "silent! ".mapmode."unmap ".dobuffer.amap
+   endif
+ 
