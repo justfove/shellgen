@@ -469,3 +469,38 @@ fun! SaveUserMaps(mapmode,maplead,mapchx,suffix)
 	exe "silent! ".mapmode."unmap ".dobuffer.amap
    endif
  
+  " save single map <something>
+  elseif strpart(a:mapchx,0,1) == '<'
+"   call Decho("save single map <something>")
+   let amap       = a:mapchx
+   if amap == "|" || amap == "\<c-v>"
+    let amap= "\<c-v>".amap
+"	call Decho("amap[[".amap."]]")
+   endif
+   let s:restoremap_{a:suffix} = s:restoremap_{a:suffix}."|silent! ".mapmode."unmap ".dobuffer.amap
+   if maparg(a:mapchx,mapmode) != ""
+    let maprhs                  = substitute(maparg(amap,mapmode),'|','<bar>','ge')
+	let s:restoremap_{a:suffix} = s:restoremap_{a:suffix}."|".mapmode."map ".dobuffer.amap." ".maprhs
+   endif
+   if dounmap
+	exe "silent! ".mapmode."unmap ".dobuffer.amap
+   endif
+ 
+  " save multiple maps
+  else
+"   call Decho("save multiple maps")
+   let i= 1
+   while i <= strlen(a:mapchx)
+    let amap= a:maplead.strpart(a:mapchx,i-1,1)
+	if amap == "|" || amap == "\<c-v>"
+	 let amap= "\<c-v>".amap
+	endif
+	let s:restoremap_{a:suffix} = s:restoremap_{a:suffix}."|silent! ".mapmode."unmap ".dobuffer.amap
+    if maparg(amap,mapmode) != ""
+     let maprhs                  = substitute(maparg(amap,mapmode),'|','<bar>','ge')
+	 let s:restoremap_{a:suffix} = s:restoremap_{a:suffix}."|".mapmode."map ".dobuffer.amap." ".maprhs
+    endif
+	if dounmap
+	 exe "silent! ".mapmode."unmap ".dobuffer.amap
+	endif
+    let i= i + 1
