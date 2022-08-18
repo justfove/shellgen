@@ -504,3 +504,34 @@ fun! SaveUserMaps(mapmode,maplead,mapchx,suffix)
 	 exe "silent! ".mapmode."unmap ".dobuffer.amap
 	endif
     let i= i + 1
+   endwhile
+  endif
+"  call Dret("SaveUserMaps : restoremap_".a:suffix.": ".s:restoremap_{a:suffix})
+endfun
+
+" ---------------------------------------------------------------------
+" RestoreUserMaps: {{{2
+"   Used to restore user maps saved by SaveUserMaps()
+fun! RestoreUserMaps(suffix)
+"  call Dfunc("RestoreUserMaps(suffix<".a:suffix.">)")
+  if exists("s:restoremap_{a:suffix}")
+   let s:restoremap_{a:suffix}= substitute(s:restoremap_{a:suffix},'|\s*$','','e')
+   if s:restoremap_{a:suffix} != ""
+"   	call Decho("exe ".s:restoremap_{a:suffix})
+    exe "silent! ".s:restoremap_{a:suffix}
+   endif
+   unlet s:restoremap_{a:suffix}
+  endif
+"  call Dret("RestoreUserMaps")
+endfun
+
+" ==============
+"  Restore: {{{1
+" ==============
+let &cpo= s:keepcpo
+unlet s:keepcpo
+
+" ================
+"  Modelines: {{{1
+" ================
+" vim: ts=4 fdm=marker
