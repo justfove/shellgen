@@ -1,1 +1,1 @@
-" set up pat
+" set up pathogen, https://github.com/tpope/vim-pathogen
