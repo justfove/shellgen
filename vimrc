@@ -5,4 +5,6 @@ call pathogen#infect()
 filetype plugin indent on
 
 " don't bother with vi compatibility
-set n
+set nocompatible
+
+" enable syntax highlighti
