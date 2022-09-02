@@ -11,4 +11,4 @@ set nocompatible
 syntax enable
 
 set autoindent
-set autoread          
+set autoread                                                
