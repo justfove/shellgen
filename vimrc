@@ -7,4 +7,8 @@ filetype plugin indent on
 " don't bother with vi compatibility
 set nocompatible
 
-" enable syntax highlighti
+" enable syntax highlighting
+syntax enable
+
+set autoindent
+set autoread          
