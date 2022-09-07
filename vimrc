@@ -11,4 +11,5 @@ set nocompatible
 syntax enable
 
 set autoindent
-set autoread                                                 " reload files when changed on disk, i.
+set autoread                                                 " reload files when changed on disk, i.e. via `git checkout`
+set backspace=2               
