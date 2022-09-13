@@ -15,4 +15,4 @@ set autoread                                                 " reload files when
 set backspace=2                                              " Fix broken backspace in some setups
 set backupcopy=yes                                           " see :help crontab
 set clipboard=unnamed                                        " yank and paste with the system clipboard
-set directory-=.                
+set directory-=.                                             " don't store swapfiles 
