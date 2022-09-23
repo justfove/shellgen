@@ -19,4 +19,5 @@ set directory-=.                                             " don't store swapf
 set encoding=utf-8
 set expandtab                                                " expand tabs to spaces
 set ignorecase                                               " case-insensitive search
-set incsearch                          
+set incsearch                                                " search as you type
+set last
