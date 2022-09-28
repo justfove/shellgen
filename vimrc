@@ -22,4 +22,5 @@ set ignorecase                                               " case-insensitive 
 set incsearch                                                " search as you type
 set laststatus=2                                             " always show statusline
 set list                                                     " show trailing whitespace
-set
+set listchars=tab:▸\ ,trail:▫
+set number     
