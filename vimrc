@@ -23,4 +23,5 @@ set incsearch                                                " search as you typ
 set laststatus=2                                             " always show statusline
 set list                                                     " show trailing whitespace
 set listchars=tab:▸\ ,trail:▫
-set number                                                   
+set number                                                   " show line numbers
+set ruler                    
