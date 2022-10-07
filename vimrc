@@ -24,4 +24,5 @@ set laststatus=2                                             " always show statu
 set list                                                     " show trailing whitespace
 set listchars=tab:▸\ ,trail:▫
 set number                                                   " show line numbers
-set ruler                                                    " show wher
+set ruler                                                    " show where you are
+set scrolloff=3              
