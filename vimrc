@@ -24,4 +24,4 @@ set laststatus=2                                             " always show statu
 set list                                                     " show trailing whitespace
 set listchars=tab:▸\ ,trail:▫
 set number                                                   " show line numbers
-set ruler                    
+set ruler                                                    " show wher
