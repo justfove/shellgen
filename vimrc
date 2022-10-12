@@ -25,4 +25,5 @@ set list                                                     " show trailing whi
 set listchars=tab:▸\ ,trail:▫
 set number                                                   " show line numbers
 set ruler                                                    " show where you are
-set scrolloff=3                                              " show context ab
+set scrolloff=3                                              " show context above/below cursorline
+set shiftwidth=4          
