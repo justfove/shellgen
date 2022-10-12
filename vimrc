@@ -27,4 +27,5 @@ set number                                                   " show line numbers
 set ruler                                                    " show where you are
 set scrolloff=3                                              " show context above/below cursorline
 set shiftwidth=4                                             " normal mode indentation commands use 4 spaces
-set show
+set showcmd
+set smartcase                      
