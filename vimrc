@@ -28,4 +28,5 @@ set ruler                                                    " show where you ar
 set scrolloff=3                                              " show context above/below cursorline
 set shiftwidth=4                                             " normal mode indentation commands use 4 spaces
 set showcmd
-set smartcase                                                " case-sensitiv
+set smartcase                                                " case-sensitive search if any caps
+set softtabstop=4  
