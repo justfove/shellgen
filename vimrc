@@ -30,4 +30,5 @@ set shiftwidth=4                                             " normal mode inden
 set showcmd
 set smartcase                                                " case-sensitive search if any caps
 set softtabstop=4                                            " insert mode tab and backspace use 4 spaces
-set tabstop=8                                                "
+set tabstop=8                                                " actual tabs occupy 8 characters
+set wildignore
