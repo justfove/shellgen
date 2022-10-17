@@ -29,4 +29,5 @@ set scrolloff=3                                              " show context abov
 set shiftwidth=4                                             " normal mode indentation commands use 4 spaces
 set showcmd
 set smartcase                                                " case-sensitive search if any caps
-set softtabstop=4                                            " inse
+set softtabstop=4                                            " insert mode tab and backspace use 4 spaces
+set tabst
