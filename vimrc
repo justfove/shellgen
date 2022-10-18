@@ -31,4 +31,5 @@ set showcmd
 set smartcase                                                " case-sensitive search if any caps
 set softtabstop=4                                            " insert mode tab and backspace use 4 spaces
 set tabstop=8                                                " actual tabs occupy 8 characters
-set wildignore
+set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
+set wildme
