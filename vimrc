@@ -32,4 +32,7 @@ set smartcase                                                " case-sensitive se
 set softtabstop=4                                            " insert mode tab and backspace use 4 spaces
 set tabstop=8                                                " actual tabs occupy 8 characters
 set wildignore=log/**,node_modules/**,target/**,tmp/**,*.rbc
-set wildmenu                                                 " show a navigable menu for tab c
+set wildmenu                                                 " show a navigable menu for tab completion
+set wildmode=longest,list,full
+
+" Enab
