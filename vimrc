@@ -41,4 +41,7 @@ if exists('$TMUX')  " Support resizing in tmux
   set ttymouse=xterm2
 endif
 
-" keyboard shor
+" keyboard shortcuts
+let mapleader = ','
+map <C-h> <C-w>h
+ma
