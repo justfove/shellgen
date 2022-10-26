@@ -44,4 +44,6 @@ endif
 " keyboard shortcuts
 let mapleader = ','
 map <C-h> <C-w>h
-ma
+map <C-j> <C-w>j
+map <C-k> <C-w>k
+map <C-l> <C-w>
