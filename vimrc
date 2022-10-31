@@ -52,4 +52,5 @@ nmap <leader>a :Ack
 nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
-nma
+nmap <leader>t :CtrlP<CR>
+nmap <leader>T :CtrlPCl
