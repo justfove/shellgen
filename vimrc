@@ -53,4 +53,5 @@ nmap <leader>b :CtrlPBuffer<CR>
 nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
 nmap <leader>t :CtrlP<CR>
-nmap <leader>T :CtrlPCl
+nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
+nmap <leader>] :TagbarTog
