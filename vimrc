@@ -54,4 +54,5 @@ nmap <leader>d :NERDTreeToggle<CR>
 nmap <leader>f :NERDTreeFind<CR>
 nmap <leader>t :CtrlP<CR>
 nmap <leader>T :CtrlPClearCache<CR>:CtrlP<CR>
-nmap <leader>] :TagbarTog
+nmap <leader>] :TagbarToggle<CR>
+nmap <leader><space> :call whitespace#strip_tra
