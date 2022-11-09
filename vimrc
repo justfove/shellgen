@@ -67,4 +67,7 @@ let g:gitgutter_enabled = 0
 
 " powerline
 set t_Co=16
-let g:Powerl
+let g:Powerline_symbols = 'fancy'
+
+" vim-markdown
+let g:vim
