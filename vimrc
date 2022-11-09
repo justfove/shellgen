@@ -63,4 +63,8 @@ map <silent> <leader>V :source ~/.vimrc<CR>:filetype detect<CR>:exe ":echo 'vimr
 " plugin settings
 let g:ctrlp_match_window = 'order:ttb,max:20'
 let g:NERDSpaceDelims=1
-let g:gitgu
+let g:gitgutter_enabled = 0
+
+" powerline
+set t_Co=16
+let g:Powerl
