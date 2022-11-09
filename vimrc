@@ -70,4 +70,6 @@ set t_Co=16
 let g:Powerline_symbols = 'fancy'
 
 " vim-markdown
-let g:vim
+let g:vim_markdown_folding_disabled=1
+
+" vim-
