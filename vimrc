@@ -72,4 +72,7 @@ let g:Powerline_symbols = 'fancy'
 " vim-markdown
 let g:vim_markdown_folding_disabled=1
 
-" vim-
+" vim-latex
+let g:tex_flavor='latex'
+
+" Use The Sil
