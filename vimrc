@@ -80,4 +80,6 @@ if executable('ag')
   let g:ackprg = 'ag --nogroup --column'
 
   " Use Ag over Grep
-  
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Us
