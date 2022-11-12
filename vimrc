@@ -82,4 +82,4 @@ if executable('ag')
   " Use Ag over Grep
   set grepprg=ag\ --nogroup\ --nocolor
 
-  " Us
+  " Use ag in CtrlP for listing files. Lightning fast and respec
