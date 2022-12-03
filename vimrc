@@ -87,3 +87,4 @@ if executable('ag')
 endif
 
 " fdoc is yaml
+autocmd BufRead,BufNewFile *.fdoc set file
