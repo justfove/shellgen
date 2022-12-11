@@ -89,4 +89,5 @@ endif
 " fdoc is yaml
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 " md is markdown
-autocmd BufRead
+autocmd BufRead,BufNewFile *.md set filetype=markdown
+" ex
