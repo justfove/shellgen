@@ -90,4 +90,5 @@ endif
 autocmd BufRead,BufNewFile *.fdoc set filetype=yaml
 " md is markdown
 autocmd BufRead,BufNewFile *.md set filetype=markdown
-" ex
+" extra rails.vim help
+autocmd User Rails 
