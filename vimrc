@@ -94,4 +94,4 @@ autocmd BufRead,BufNewFile *.md set filetype=markdown
 autocmd User Rails silent! Rnavcommand decorator      app/decorators            -glob=**/* -suffix=_decorator.rb
 autocmd User Rails silent! Rnavcommand observer       app/observers             -glob=**/* -suffix=_observer.rb
 autocmd User Rails silent! Rnavcommand feature        features                  -glob=**/* -suffix=.feature
-autocmd User Rails s
+autocmd User Rails silent! Rnavcommand job            app/jobs      
