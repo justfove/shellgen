@@ -95,4 +95,4 @@ autocmd User Rails silent! Rnavcommand decorator      app/decorators            
 autocmd User Rails silent! Rnavcommand observer       app/observers             -glob=**/* -suffix=_observer.rb
 autocmd User Rails silent! Rnavcommand feature        features                  -glob=**/* -suffix=.feature
 autocmd User Rails silent! Rnavcommand job            app/jobs                  -glob=**/* -suffix=_job.rb
-autocmd User Rails silent! Rnavcommand mediator     
+autocmd User Rails silent! Rnavcommand mediator       app/mediators             -glob=**/* -suffix
