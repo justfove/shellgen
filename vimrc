@@ -97,4 +97,7 @@ autocmd User Rails silent! Rnavcommand feature        features                  
 autocmd User Rails silent! Rnavcommand job            app/jobs                  -glob=**/* -suffix=_job.rb
 autocmd User Rails silent! Rnavcommand mediator       app/mediators             -glob=**/* -suffix=_mediator.rb
 autocmd User Rails silent! Rnavcommand stepdefinition features/step_definitions -glob=**/* -suffix=_steps.rb
-" automatically rebalance windows on vim
+" automatically rebalance windows on vim resize
+autocmd VimResized * :wincmd =
+
+" 
