@@ -102,4 +102,4 @@ autocmd VimResized * :wincmd =
 
 " Fix Cursor in TMUX
 if exists('$TMUX')
-  let &t_SI =
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorSha
