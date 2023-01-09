@@ -100,4 +100,6 @@ autocmd User Rails silent! Rnavcommand stepdefinition features/step_definitions 
 " automatically rebalance windows on vim resize
 autocmd VimResized * :wincmd =
 
-" 
+" Fix Cursor in TMUX
+if exists('$TMUX')
+  let &t_SI =
