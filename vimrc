@@ -110,4 +110,5 @@ else
 endif
 
 " Go crazy!
-if filereadable
+if filereadable(expand("~/.vimrc.local"))
+  " In your .vimrc
