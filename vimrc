@@ -111,4 +111,7 @@ endif
 
 " Go crazy!
 if filereadable(expand("~/.vimrc.local"))
-  " In your .vimrc
+  " In your .vimrc.local, you might like:
+  "
+  " set autowrite
+  " se
