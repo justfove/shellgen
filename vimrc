@@ -114,4 +114,6 @@ if filereadable(expand("~/.vimrc.local"))
   " In your .vimrc.local, you might like:
   "
   " set autowrite
-  " se
+  " set nocursorline
+  " set nowritebackup
+  " set
