@@ -116,4 +116,4 @@ if filereadable(expand("~/.vimrc.local"))
   " set autowrite
   " set nocursorline
   " set nowritebackup
-  " set
+  " set whichwrap+=<,>,h,l,[,] " Wrap arrow keys betwe
