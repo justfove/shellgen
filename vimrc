@@ -118,4 +118,5 @@ if filereadable(expand("~/.vimrc.local"))
   " set nowritebackup
   " set whichwrap+=<,>,h,l,[,] " Wrap arrow keys between lines
   "
-  " autocmd! bufwritepost .v
+  " autocmd! bufwritepost .vimrc source ~/.vimrc
+  " noremap! jj <ESC>
