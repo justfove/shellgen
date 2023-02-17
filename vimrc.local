@@ -1,1 +1,3 @@
-set nocursorli
+set nocursorline " don't highlight current line
+
+" keyboard 
