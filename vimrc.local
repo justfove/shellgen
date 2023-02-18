@@ -1,3 +1,7 @@
 set nocursorline " don't highlight current line
 
-" keyboard 
+" keyboard shortcuts
+inoremap jj <ESC>
+
+" gui settings
+if (&t_Co ==
